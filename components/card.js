@@ -1,17 +1,18 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 const Card = props => {
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: props.imagen}} />
-      <TouchableOpacity style={styles.overlay} />
-      <Text style={styles.text}>{props.nombre}</Text>
+      <TouchableOpacity style={styles.overlay}>
+        <Text style={styles.text}>{props.nombre}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default Card;
+export default memo(Card);
 const styles = StyleSheet.create({
   card: {
     alignSelf: 'center',
@@ -28,19 +29,22 @@ const styles = StyleSheet.create({
   },
   text: {
     position: 'absolute',
-    marginTop: 325,
+    marginTop: '2%',
     marginHorizontal: '7%',
     fontSize: 30,
+    flex: 1,
     color: 'white',
+    backgroundColor: 'rgba(255,255,255,0)',
     fontWeight: 'bold',
   },
   overlay: {
     height: 135,
     width: '100%',
+    flexDirection: 'column',
     marginTop: 305,
-    backgroundColor: '#000000',
+    backgroundColor: 'rgba(0,0,0,0.3)',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    opacity: 0.3,
+    textAlignVertical: 'center',
   },
 });
