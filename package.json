@@ -10,8 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "modules": "^0.4.0",
     "react": "18.1.0",
-    "react-native": "0.70.0",
+    "react-native": "0.70.1",
     "react-native-linear-gradient": "^2.6.2"
   },
   "devDependencies": {
