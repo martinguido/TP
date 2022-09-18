@@ -7,10 +7,12 @@ import {
   TextInput,
 } from 'react-native';
 import Card from './card';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Screen1 = () => {
   const [characters, setcharacters] = useState();
   const [loading, setLoading] = useState(true);
+  const [text, onChangeText] = React.useState(null);
   setTimeout(() => {
     fetch('https://rickandmortyapi.com/api/character')
       .then(response => response.json())
@@ -28,11 +30,14 @@ const Screen1 = () => {
       <View style={styles.search}>
         <TextInput
           placeholder="Escribi un personaje..."
+          onChangeText={onChangeText}
+          value={text}
           style={styles.searchbar}
         />
+        <Icon name="filter" style={styles.filter_icon} />
       </View>
       {loading ? (
-        <ActivityIndicator size="large" animating={loading} />
+        <ActivityIndicator size="large" color="#0000ff" animating={loading} />
       ) : (
         <FlatList
           style={({height: '100%'}, {width: '100%'})}
@@ -42,6 +47,7 @@ const Screen1 = () => {
           data={characters}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
+          //ListHeaderComponent={() => <Text style={styles.texte}>HOLA</Text>}
         />
       )}
     </View>
@@ -60,21 +66,22 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   search: {
-    marginTop: '3%',
-    width: '90%',
-    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '5%',
+    marginBottom: '3%',
+    width: '80%',
+    height: '5%',
   },
   searchbar: {
     backgroundColor: 'white',
-    height: 40,
+    flex: 1,
+    flexDirection: 'row',
+    width: '85%',
     fontSize: 18,
     fontWeight: 'bold',
     borderRadius: 20,
-    placeholderTextColor: '#FFFFFF',
-    clearIcon: {
-      color: 'white',
-      size: 21,
-    },
+    paddingLeft: '6%',
   },
   separator: {
     width: '90%',
@@ -82,5 +89,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 30,
     alignSelf: 'center',
+  },
+  filter_icon: {
+    width: '10%',
+    marginLeft: '5%',
+    height: '100%',
+    borderRadius: 30,
+    color: 'black',
+    justifyContent: 'space-evenly',
+    fontSize: 30,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    backgroundColor: 'white',
   },
 });

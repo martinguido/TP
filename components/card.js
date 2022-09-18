@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'white',
     fontWeight: 'bold',
-    opacity: 1,
   },
   overlay: {
     height: 135,
