@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, ActivityIndicator, StyleSheet, FlatList} from 'react-native';
 import Card from './card';
 
-const Screen4 = () => {
+const Screen1 = () => {
   const [characters, setcharacters] = useState();
   const [loading, setLoading] = useState(true);
   setTimeout(() => {
@@ -34,7 +34,7 @@ const Screen4 = () => {
   );
 };
 
-export default Screen4;
+export default Screen1;
 
 const styles = StyleSheet.create({
   container: {

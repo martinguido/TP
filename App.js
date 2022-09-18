@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Screen4 from './components/screen4';
+import Screen1 from './components/screen1.js';
 
 const App = () => {
-  return <Screen4 />;
+  return <Screen1 />;
 };
 
 export default App;
