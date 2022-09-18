@@ -1,19 +1,11 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ImageBackground} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 const Card = props => {
   return (
     <View style={styles.card}>
-      <ImageBackground
-        style={styles.image}
-        imageStyle={{borderRadius: 30}}
-        source={{uri: props.imagen}}>
-        <LinearGradient
-          colors={['#4c669f', '#3b5998', '#192f6a']}
-          style={styles.linearGradient}
-        />
-      </ImageBackground>
+      <Image style={styles.image} source={{uri: props.imagen}} />
+      <TouchableOpacity style={styles.overlay} />
       <Text style={styles.text}>{props.nombre}</Text>
     </View>
   );
@@ -36,10 +28,20 @@ const styles = StyleSheet.create({
   },
   text: {
     position: 'absolute',
-    marginTop: 65,
-    marginHorizontal: 20,
+    marginTop: 325,
+    marginHorizontal: '7%',
     fontSize: 30,
     color: 'white',
     fontWeight: 'bold',
+    opacity: 1,
+  },
+  overlay: {
+    height: 135,
+    width: '100%',
+    marginTop: 305,
+    backgroundColor: '#000000',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    opacity: 0.3,
   },
 });
