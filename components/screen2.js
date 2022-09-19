@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   ActivityIndicator,
@@ -9,66 +9,36 @@ import {
 import Card from './card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Screen2 = () => {
-  /*
-  const [characters, setcharacters] = useState();
-  const [next, setNext] = useState();
-  setTimeout(() => {
-    fetch('https://rickandmortyapi.com/api/character?page=')
-      .then(response => response.json())
-      .then(response => {
-        setNext(response.info.next);
-        setcharacters(response.results);
-        setLoading(false);
-      });
-  }, 5000);
-
-
-*/
-  const [loading, setLoading] = useState(true);
-  const [text, onChangeText] = React.useState(null);
+const Screen3 = () => {
   const [characters, setCharacters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [pageCurrent, setPageCurrent] = useState(1);
 
-  useEffect(() => {
-    console.log('useEffect pageCurrent: ', pageCurrent);
-    setIsLoading(true);
-    const getCharacters = async () => {
-      const apiURL =
-        'https://rickandmortyapi.com/api/character?page=' + pageCurrent;
-      fetch(apiURL)
-        .then(res => res.json())
-        .then(resJson => {
-          setCharacters(characters.concat(resJson));
-          setIsLoading(false);
-        });
-    };
-    getCharacters();
-    return () => {};
-  }, [characters, pageCurrent]);
+  const [loading, setLoading] = useState(true);
+  const [text, onChangeText] = useState('');
+  const [currPage, setCurrPage] = useState(41);
+  const [currP, setCurrP] = useState(
+    'https://rickandmortyapi.com/api/character?page=1',
+  );
 
-  const handleLoadMore = () => {
-    if (this.pageCurrent < 42) {
-      setPageCurrent(pageCurrent + 1);
-      setIsLoading(true);
-    }
-  };
   const renderItem = ({item}) => (
     <Card imagen={item.image} nombre={item.name} />
   );
 
-  const renderLoader = () => {
-    return isLoading ? (
-      <View style={styles.loader}>
-        <ActivityIndicator
-          style={styles.loaderactivity}
-          size="large"
-          color="grey"
-        />
-      </View>
-    ) : null;
+  const setMoreData = () => {
+    setCurrPage(prevPage => prevPage + 1);
   };
+
+  React.useEffect(() => {
+    fetch('https://rickandmortyapi.com/api/character?page=' + currPage)
+      .then(response => response.json())
+      .then(response => {
+        setCurrP(response.info.next);
+        setCharacters(prevCharacters =>
+          prevCharacters.concat(response.results),
+        );
+        setLoading(false);
+        console.log('Se actualizo');
+      });
+  }, [currPage]);
   return (
     <View style={styles.container}>
       <View style={styles.search}>
@@ -81,24 +51,23 @@ const Screen2 = () => {
         <Icon name="filter" style={styles.filter_icon} />
       </View>
       {loading ? (
-        <ActivityIndicator size="large" color="grey" animating={isLoading} />
+        <ActivityIndicator size="large" color="grey" animating={loading} />
       ) : (
         <FlatList
           style={({height: '100%'}, {width: '100%'})}
-          key={item => item.id}
+          keyExtractor={item => item.id.toString()}
           data={characters}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          ListFooterComponent={renderLoader}
-          onEndReachedThreshold={5}
-          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.5}
+          onEndReached={setMoreData}
         />
       )}
     </View>
   );
 };
 
-export default Screen2;
+export default Screen3;
 
 const styles = StyleSheet.create({
   container: {
@@ -148,7 +117,7 @@ const styles = StyleSheet.create({
   },
   loader: {
     width: '100%',
-    backgroundColor: 'rgba(255,255,255,0)',
+    backgroundColor: 'rgba(255,255,255,1)',
     height: '25%',
     flex: 1,
     flexDirection: 'row',

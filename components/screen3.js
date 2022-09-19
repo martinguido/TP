@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   ActivityIndicator,
@@ -13,24 +13,49 @@ const Screen3 = () => {
   const [characters, setCharacters] = useState([]);
 
   const [loading, setLoading] = useState(true);
-  const [text, onChangeText] = useState(null);
-  const [currPage, setCurrPage] = useState(2);
-
+  const [text, onChangeText] = useState('');
+  const [currPage, setCurrPage] = useState(41);
+  /*
   fetch('https://rickandmortyapi.com/api/character?page=1')
     .then(response => response.json())
     .then(response => {
       setCharacters(response.results);
       setLoading(false);
+      console.log('La cantidad de personajes es', characters.length);
     });
-
+ */
   const renderItem = ({item}) => (
     <Card imagen={item.image} nombre={item.name} />
   );
 
   const setMoreData = () => {
     setCurrPage(prevPage => prevPage + 1);
-    console.log(currPage);
-
+    /*
+    fetch('https://rickandmortyapi.com/api/character?page=' + currPage)
+      .then(response => response.json())
+      .then(response => {
+        setCharacters(prevCharacters =>
+          prevCharacters.concat(response.results),
+        );
+        console.log(
+          'La cantidad ACTUALIZADA de personajes es',
+          characters.length,
+        );
+      });
+      */
+  };
+  /*
+  React.useEffect(() => {
+    fetch('https://rickandmortyapi.com/api/character?page=')
+      .then(response => response.json())
+      .then(response => {
+        setCharacters(response.results);
+        setLoading(false);
+        console.log('La cantidad de personajes es', characters.length);
+      });
+  }, [characters.length]);
+*/
+  React.useEffect(() => {
     fetch('https://rickandmortyapi.com/api/character?page=' + currPage)
       .then(response => response.json())
       .then(response => {
@@ -38,20 +63,9 @@ const Screen3 = () => {
           prevCharacters.concat(response.results),
         );
         setLoading(false);
+        console.log('Se actualizo');
       });
-
-    return (
-      <View style={styles.loader}>
-        <ActivityIndicator
-          style={styles.loaderactivity}
-          size="large"
-          color="grey"
-          animating={loading}
-        />
-      </View>
-    );
-  };
-
+  }, [currPage]);
   return (
     <View style={styles.container}>
       <View style={styles.search}>
