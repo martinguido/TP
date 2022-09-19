@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   ActivityIndicator,
@@ -9,14 +9,12 @@ import {
 import Card from './card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Screen1 = () => {
+const Screen2 = () => {
+  /*
   const [characters, setcharacters] = useState();
-  const [loading, setLoading] = useState(true);
-  const [text, onChangeText] = React.useState(null);
   const [next, setNext] = useState();
-
   setTimeout(() => {
-    fetch('https://rickandmortyapi.com/api/character')
+    fetch('https://rickandmortyapi.com/api/character?page=')
       .then(response => response.json())
       .then(response => {
         setNext(response.info.next);
@@ -25,12 +23,43 @@ const Screen1 = () => {
       });
   }, 5000);
 
+
+*/
+  const [loading, setLoading] = useState(true);
+  const [text, onChangeText] = React.useState(null);
+  const [characters, setCharacters] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageCurrent, setPageCurrent] = useState(1);
+
+  useEffect(() => {
+    console.log('useEffect pageCurrent: ', pageCurrent);
+    setIsLoading(true);
+    const getCharacters = async () => {
+      const apiURL =
+        'https://rickandmortyapi.com/api/character?page=' + pageCurrent;
+      fetch(apiURL)
+        .then(res => res.json())
+        .then(resJson => {
+          setCharacters(characters.concat(resJson));
+          setIsLoading(false);
+        });
+    };
+    getCharacters();
+    return () => {};
+  }, [characters, pageCurrent]);
+
+  const handleLoadMore = () => {
+    if (this.pageCurrent < 42) {
+      setPageCurrent(pageCurrent + 1);
+      setIsLoading(true);
+    }
+  };
   const renderItem = ({item}) => (
     <Card imagen={item.image} nombre={item.name} />
   );
 
   const renderLoader = () => {
-    return (
+    return isLoading ? (
       <View style={styles.loader}>
         <ActivityIndicator
           style={styles.loaderactivity}
@@ -38,7 +67,7 @@ const Screen1 = () => {
           color="grey"
         />
       </View>
-    );
+    ) : null;
   };
   return (
     <View style={styles.container}>
@@ -52,24 +81,24 @@ const Screen1 = () => {
         <Icon name="filter" style={styles.filter_icon} />
       </View>
       {loading ? (
-        <ActivityIndicator size="large" color="grey" animating={loading} />
+        <ActivityIndicator size="large" color="grey" animating={isLoading} />
       ) : (
         <FlatList
           style={({height: '100%'}, {width: '100%'})}
           key={item => item.id}
-          onEndReachedThreshold={5}
-          //onEndReached={this.setMoreData}
           data={characters}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListFooterComponent={renderLoader}
+          onEndReachedThreshold={5}
+          onEndReached={handleLoadMore}
         />
       )}
     </View>
   );
 };
 
-export default Screen1;
+export default Screen2;
 
 const styles = StyleSheet.create({
   container: {

@@ -9,37 +9,49 @@ import {
 import Card from './card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Screen1 = () => {
-  const [characters, setcharacters] = useState();
-  const [loading, setLoading] = useState(true);
-  const [text, onChangeText] = React.useState(null);
-  const [next, setNext] = useState();
+const Screen3 = () => {
+  const [characters, setCharacters] = useState([]);
 
-  setTimeout(() => {
-    fetch('https://rickandmortyapi.com/api/character')
-      .then(response => response.json())
-      .then(response => {
-        setNext(response.info.next);
-        setcharacters(response.results);
-        setLoading(false);
-      });
-  }, 5000);
+  const [loading, setLoading] = useState(true);
+  const [text, onChangeText] = useState(null);
+  const [currPage, setCurrPage] = useState(2);
+
+  fetch('https://rickandmortyapi.com/api/character?page=1')
+    .then(response => response.json())
+    .then(response => {
+      setCharacters(response.results);
+      setLoading(false);
+    });
 
   const renderItem = ({item}) => (
     <Card imagen={item.image} nombre={item.name} />
   );
 
-  const renderLoader = () => {
+  const setMoreData = () => {
+    setCurrPage(prevPage => prevPage + 1);
+    console.log(currPage);
+
+    fetch('https://rickandmortyapi.com/api/character?page=' + currPage)
+      .then(response => response.json())
+      .then(response => {
+        setCharacters(prevCharacters =>
+          prevCharacters.concat(response.results),
+        );
+        setLoading(false);
+      });
+
     return (
       <View style={styles.loader}>
         <ActivityIndicator
           style={styles.loaderactivity}
           size="large"
           color="grey"
+          animating={loading}
         />
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.search}>
@@ -56,20 +68,19 @@ const Screen1 = () => {
       ) : (
         <FlatList
           style={({height: '100%'}, {width: '100%'})}
-          key={item => item.id}
-          onEndReachedThreshold={5}
-          //onEndReached={this.setMoreData}
+          keyExtractor={item => item.id.toString()}
           data={characters}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          ListFooterComponent={renderLoader}
+          onEndReachedThreshold={0.5}
+          onEndReached={setMoreData}
         />
       )}
     </View>
   );
 };
 
-export default Screen1;
+export default Screen3;
 
 const styles = StyleSheet.create({
   container: {
@@ -119,7 +130,7 @@ const styles = StyleSheet.create({
   },
   loader: {
     width: '100%',
-    backgroundColor: 'rgba(255,255,255,0)',
+    backgroundColor: 'rgba(255,255,255,1)',
     height: '25%',
     flex: 1,
     flexDirection: 'row',
