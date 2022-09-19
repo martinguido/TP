@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Screen1 from './components/screen1.js';
+import Screen3 from './components/screen3.js';
 
 const App = () => {
-  return <Screen1 />;
+  return <Screen3 />;
 };
 
 export default App;
