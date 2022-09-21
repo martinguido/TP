@@ -15,6 +15,7 @@ const Screen3 = () => {
   const [loading, setLoading] = useState(true);
   const [text, onChangeText] = useState('');
   const [currPage, setCurrPage] = useState(41);
+  const [next, setNext] = useState('');
   /*
   fetch('https://rickandmortyapi.com/api/character?page=1')
     .then(response => response.json())
@@ -29,7 +30,9 @@ const Screen3 = () => {
   );
 
   const setMoreData = () => {
-    setCurrPage(prevPage => prevPage + 1);
+    if (next !== null) {
+      setCurrPage(prevPage => prevPage + 1);
+    }
     /*
     fetch('https://rickandmortyapi.com/api/character?page=' + currPage)
       .then(response => response.json())
@@ -62,8 +65,12 @@ const Screen3 = () => {
         setCharacters(prevCharacters =>
           prevCharacters.concat(response.results),
         );
+        setNext(response.info.next);
         setLoading(false);
         console.log('Se actualizo');
+      })
+      .catch(error => {
+        console.log(error);
       });
   }, [currPage]);
   return (
