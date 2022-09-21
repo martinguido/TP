@@ -11,7 +11,7 @@ const Card = props => {
     </View>
   );
 };
-
+//probando
 export default memo(Card);
 const styles = StyleSheet.create({
   card: {
