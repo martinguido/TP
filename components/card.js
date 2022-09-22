@@ -1,17 +1,41 @@
-import React, {memo} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {memo, useState} from 'react';
+import {View, Text, Image, StyleSheet, TouchableOpacity, Button, Alert, Modal, ProgressViewIOSComponent} from 'react-native';
+import { color } from 'react-native-elements/dist/helpers';
 
 const Card = props => {
+
+  const [showModal, setShowModal] = useState(false);
+
+
+
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: props.imagen}} />
       <TouchableOpacity style={styles.overlay}>
         <Text style={styles.text}>{props.nombre}</Text>
+        <View style={styles.fixToText}>
+        <Button
+          title="Right button"
+          onPress={() => setShowModal(true)}>
+          style={styles.button}>
+        </Button>
+        <Modal transparent={true} visible={showModal} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalCard}>
+            
+            <Text>Genero: {props.genero}</Text>
+            <Text>Especie: {props.especie}</Text>
+            <Text>Estado: {props.estado}</Text>
+            <Text style={styles.close} onPress={() => setShowModal(false)}>Cerrar</Text>
+          </View>
+        </View>
+      </Modal>
+      </View>
       </TouchableOpacity>
     </View>
   );
 };
-//probando
+
 export default memo(Card);
 const styles = StyleSheet.create({
   card: {
@@ -45,4 +69,34 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     justifyContent: 'center',
   },
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    color: 'red',
+    backgroundColor: 'black',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalCard: {
+    width: '80%',
+    height: '50%',
+    backgroundColor: 'white',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: '',
+  },
+  close: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    height: 300,
+    width: 300,
+    margin: 10,
+    display: 'flex',
+  }
+    
 });
