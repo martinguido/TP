@@ -1,5 +1,6 @@
 import React, {memo, useState} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, Button, Alert, Modal, ProgressViewIOSComponent} from 'react-native';
+import { fonts } from 'react-native-elements/dist/config';
 import { color } from 'react-native-elements/dist/helpers';
 
 const Card = props => {
@@ -21,10 +22,14 @@ const Card = props => {
         <Modal transparent={true} visible={showModal} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalCard}>
-            <Text>Genero: {props.genero}</Text>
-            <Text>Especie: {props.especie}</Text>
-            <Text>Estado: {props.estado}</Text>
-            <Text style={styles.close} onPress={() => setShowModal(false)}>cerrar</Text>
+            <Text style={styles.info} >Genre: {props.genero}</Text>
+            <Text style={styles.info} >Species: {props.especie}</Text>
+            <Text style={styles.info} >Status: {props.estado}</Text>
+            <Text style={styles.info} >Origin: {props.origen}</Text>
+            <Text style={styles.info} >Location: {props.ubicacion}</Text>
+            <TouchableOpacity style={styles.close} onPress={() => setShowModal(false)}>
+              <Text style={styles.x}>X</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -79,19 +84,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     alignItems: 'center',
     justifyContent: 'center',
+    borderColor: 'black',
+    borderWidth: 2,
     //marginLeft: 300,
     alignSelf: 'flex-end',
     //justifyContent: 'center',
     //textAlignVertical: 'center',
-    borderRadius: 15,
+    borderRadius: 20,
     
   },  
     buttonText: {  
-    padding: 20,  
-   // alignSelf: 'center',
+    padding: 10,  
+    alignSelf: 'center',
     color: 'white',  
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
     fontWeight: "bold",
-    fontSize: 18  
+    fontSize: 20, 
+    //marginRight: 10,
+    textAlignVertical: 'center',
     
   },  
   modalContainer: {
@@ -102,18 +114,31 @@ const styles = StyleSheet.create({
   modalCard: {
     width: '80%',
     height: '50%',
-    backgroundColor: 'white',
+    backgroundColor: 'lightgrey',
+    borderColor: 'black',
+    borderWidth: 10,
     borderRadius: 30,
     justifyContent: 'center',
-    alignItems: '',
+    alignItems: 'center',
   },
   close: {
     justifyContent: 'center',
     alignItems: 'flex-end',
-    height: 300,
-    width: 300,
-    margin: 10,
+    borderColor: 'black',
+    borderWidth: 3,
+    //height: 300,
+    //width: 300,
     display: 'flex',
+
+  },
+  x: {
+    fontSize: 30,
+    padding: 10,
+    fontWeight: 'bold',
+  },
+  info: {
+    fontSize: 20,
+    padding: 10,
   }
     
 });

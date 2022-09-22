@@ -26,7 +26,7 @@ const Screen3 = () => {
     });
  */
   const renderItem = ({item}) => (
-    <Card imagen={item.image} nombre={item.name} estado={item.status} especie={item.species} genero={item.gender} />
+    <Card imagen={item.image} nombre={item.name} estado={item.status} especie={item.species} genero={item.gender} origen={item.origin.name} ubicacion={item.location.name}/>
     //<MyModal estado={item.status} especie={item.species} genero={item.gender} />
   );
 
