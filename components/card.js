@@ -13,24 +13,21 @@ const Card = props => {
       <Image style={styles.image} source={{uri: props.imagen}} />
       <TouchableOpacity style={styles.overlay}>
         <Text style={styles.text}>{props.nombre}</Text>
-        <View style={styles.fixToText}>
-        <Button
-          title="Right button"
-          onPress={() => setShowModal(true)}>
-          style={styles.button}>
-        </Button>
+        <TouchableOpacity onPress={() => setShowModal(true)}>
+          <View style={styles.button}>  
+          <Text style={styles.buttonText}>+</Text>  
+          </View>
+      </TouchableOpacity>
         <Modal transparent={true} visible={showModal} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalCard}>
-            
             <Text>Genero: {props.genero}</Text>
             <Text>Especie: {props.especie}</Text>
             <Text>Estado: {props.estado}</Text>
-            <Text style={styles.close} onPress={() => setShowModal(false)}>Cerrar</Text>
+            <Text style={styles.close} onPress={() => setShowModal(false)}>cerrar</Text>
           </View>
         </View>
       </Modal>
-      </View>
       </TouchableOpacity>
     </View>
   );
@@ -73,10 +70,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  button: {
-    color: 'red',
-    backgroundColor: 'black',
-  },
+  button: {  
+    marginBottom: 10,  
+    marginRight: 5, 
+    width: 50,
+    height: 60,
+   // alignItems: 'flex-end',  
+    backgroundColor: 'grey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //marginLeft: 300,
+    alignSelf: 'flex-end',
+    //justifyContent: 'center',
+    //textAlignVertical: 'center',
+    borderRadius: 15,
+    
+  },  
+    buttonText: {  
+    padding: 20,  
+   // alignSelf: 'center',
+    color: 'white',  
+    fontWeight: "bold",
+    fontSize: 18  
+    
+  },  
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
