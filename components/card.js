@@ -119,13 +119,11 @@ const styles = StyleSheet.create({
     borderWidth: 10,
     borderRadius: 30,
     justifyContent: 'center',
-    alignItems: 'center',
+    //alignItems: 'center',
   },
   close: {
     justifyContent: 'center',
-    alignItems: 'flex-end',
-    borderColor: 'black',
-    borderWidth: 3,
+    alignItems: 'center',
     //height: 300,
     //width: 300,
     display: 'flex',
@@ -135,10 +133,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     padding: 10,
     fontWeight: 'bold',
+    borderColor: 'black',
+    borderWidth: 3,
+
   },
   info: {
     fontSize: 20,
     padding: 10,
+    marginLeft: 30, 
   }
     
 });
