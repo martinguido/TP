@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Card from './card';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MySearchBar from './searchBar';
 
 const Screen3 = () => {
   const [characters, setCharacters] = useState([]);
@@ -121,16 +122,13 @@ const Screen3 = () => {
   return (
  
     <View style={styles.container}>
-      
-       <View style={styles.container2}>
-        <TextInput 
-        placeholder="Type here..."
-        placeholderTextColor="black"
-        style={styles.searchBar__clicked}
-        value={search}
-        onChangeText={(text) => searchFilterFunction(text)}
-      >
-      </TextInput>
+      <View>
+      <MySearchBar 
+            renderItem={renderItem}
+            search={search}
+            setSearch={setSearch}
+            filteredDataSource={filteredDataSource}
+          />
       </View>
       
        
@@ -140,7 +138,7 @@ const Screen3 = () => {
         <FlatList
           style={({height: '100%'}, {width: '100%'})}
           keyExtractor={item => item.id.toString()}
-          data={filteredDataSource}
+          data={characters}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           onEndReachedThreshold={0.5}
@@ -210,35 +208,6 @@ const styles = StyleSheet.create({
   },
   loaderactivity: {
     flex: 1,
-  },
-  container2: {
-    marginTop: 70,
-    margin: 15,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexDirection: "row",
-    width: "90%",
-    backgroundColor: "#d9dbda",
-    borderRadius: 15,
-
-
-},
-    searchBar__clicked: {
-    padding: 10,
-    width: "95%",
-    height: 40,
-    flexDirection: "row",
-    //width: "80%",
-    backgroundColor: "#d9dbda",
-    borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-
-},
-input: {
-    fontSize: 30,
-    marginLeft: 10,
-    width: "90%",
   },
   
 });
