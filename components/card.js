@@ -2,6 +2,7 @@ import React, {memo, useState} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, Button, Alert, Modal, ProgressViewIOSComponent} from 'react-native';
 import { fonts } from 'react-native-elements/dist/config';
 import { color } from 'react-native-elements/dist/helpers';
+import MyModal from './modal'
 
 const Card = props => {
 
@@ -19,20 +20,9 @@ const Card = props => {
           <Text style={styles.buttonText}>+</Text>  
           </View>
       </TouchableOpacity>
-        <Modal transparent={true} visible={showModal} animationType="slide">
-        <View style={styles.modalContainer}>
-          <View style={styles.modalCard}>
-            <Text style={styles.info} >Genre: {props.genero}</Text>
-            <Text style={styles.info} >Species: {props.especie}</Text>
-            <Text style={styles.info} >Status: {props.estado}</Text>
-            <Text style={styles.info} >Origin: {props.origen}</Text>
-            <Text style={styles.info} >Location: {props.ubicacion}</Text>
-            <TouchableOpacity style={styles.close} onPress={() => setShowModal(false)}>
-              <Text style={styles.x}>X</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <View>
+        <MyModal estado={props.estado} especie={props.especie} genero={props.genero} origen={props.origen} ubicacion={props.ubicacion} showModal= {showModal} setShowModal= {setShowModal}/>
+      </View>
       </TouchableOpacity>
     </View>
   );
