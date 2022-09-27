@@ -1,14 +1,21 @@
 import React, {memo, useState} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, Button, Alert, Modal, ProgressViewIOSComponent} from 'react-native';
-import { fonts } from 'react-native-elements/dist/config';
-import { color } from 'react-native-elements/dist/helpers';
-import MyModal from './modal'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  Alert,
+  Modal,
+  ProgressViewIOSComponent,
+} from 'react-native';
+import {fonts} from 'react-native-elements/dist/config';
+import {color} from 'react-native-elements/dist/helpers';
+import MyModal from './modal';
 
 const Card = props => {
-
   const [showModal, setShowModal] = useState(false);
-
-
 
   return (
     <View style={styles.card}>
@@ -16,13 +23,21 @@ const Card = props => {
       <TouchableOpacity style={styles.overlay}>
         <Text style={styles.text}>{props.nombre}</Text>
         <TouchableOpacity onPress={() => setShowModal(true)}>
-          <View style={styles.button}>  
-          <Text style={styles.buttonText}>+</Text>  
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>+</Text>
           </View>
-      </TouchableOpacity>
-      <View>
-        <MyModal estado={props.estado} especie={props.especie} genero={props.genero} origen={props.origen} ubicacion={props.ubicacion} showModal= {showModal} setShowModal= {setShowModal}/>
-      </View>
+        </TouchableOpacity>
+        <View>
+          <MyModal
+            estado={props.estado}
+            especie={props.especie}
+            genero={props.genero}
+            origen={props.origen}
+            ubicacion={props.ubicacion}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -65,12 +80,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  button: {  
-    marginBottom: 10,  
-    marginRight: 5, 
+  button: {
+    marginBottom: 10,
+    marginRight: 5,
     width: 50,
     height: 60,
-   // alignItems: 'flex-end',  
+    // alignItems: 'flex-end',
     backgroundColor: 'grey',
     alignItems: 'center',
     justifyContent: 'center',
@@ -81,21 +96,19 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
     //textAlignVertical: 'center',
     borderRadius: 20,
-    
-  },  
-    buttonText: {  
-    padding: 10,  
+  },
+  buttonText: {
+    padding: 10,
     alignSelf: 'center',
-    color: 'white',  
+    color: 'white',
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    fontWeight: "bold",
-    fontSize: 20, 
+    fontWeight: 'bold',
+    fontSize: 20,
     //marginRight: 10,
     textAlignVertical: 'center',
-    
-  },  
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -117,7 +130,6 @@ const styles = StyleSheet.create({
     //height: 300,
     //width: 300,
     display: 'flex',
-
   },
   x: {
     fontSize: 30,
@@ -125,12 +137,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     borderColor: 'black',
     borderWidth: 3,
-
   },
   info: {
     fontSize: 20,
     padding: 10,
-    marginLeft: 30, 
-  }
-    
+    marginLeft: 30,
+  },
 });
