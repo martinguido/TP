@@ -7,6 +7,8 @@ import {
   TextInput,
   Button,
   Text,
+  Modal,
+  TouchableOpacity
 } from 'react-native';
 import Card from './card';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -21,6 +23,8 @@ const Screen3 = () => {
   const [species, setSpecies] = useState('');
   const [gender, setGender] = useState('');
   const [type, setType] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
 
   const renderItem = ({item}) => (
     <Card
@@ -107,47 +111,65 @@ const Screen3 = () => {
   }, [currPage, search, stats, species, gender, type]);
   return (
     <View style={styles.container}>
+    <View>
+    <TouchableOpacity style={styles.filter} onPress={() => setShowModal(true)}>
+        <Text style= {styles.filterText}>Filter</Text>
+    </TouchableOpacity>
+
+    <View>
+      <Modal transparent={true} visible={showModal} animationType="slide">
       <View style={styles.container2}>
+        <View style={styles.inputContainer}>
+        <Text style={styles.text2}>Nombre:</Text>
         <TextInput
           placeholder="Escriba el nombre aca..."
           placeholderTextColor="black"
-          style={styles.searchBarName__clicked}
+          style={styles.searchBar}
           value={search}
           onChangeText={text => filterByName(text)}
         />
+        </View>
+        <View style={styles.inputContainer}>
+        <Text style={styles.text2}>Especie:</Text>
         <TextInput
           placeholder="Escriba la especie aca..."
           placeholderTextColor="black"
-          style={styles.searchBarSpecies__clicked}
+          style={styles.searchBar}
           value={species}
           onChangeText={s => filterBySpecies(s)}
         />
+        </View>
+        <View style={styles.inputContainer}>
+        <Text style={styles.text2}>Tipo:</Text>
         <TextInput
           placeholder="Escriba el tipo aca..."
           placeholderTextColor="black"
-          style={styles.searchBarType__clicked}
+          style={styles.searchBar}
           value={type}
           onChangeText={t => filterByType(t)}
         />
+        </View>
+       
         <View>
-          <Text>Estado</Text>
+
+          <Text style={styles.text3}>Estado</Text>
           <View style={styles.status}>
-            <Button title="Dead" onPress={() => filterByStats('Dead')}>
-              Dead
-            </Button>
-            <Button title="Alive" onPress={() => filterByStats('Alive')}>
-              Alive
-            </Button>
-            <Button title="Unknown" onPress={() => filterByStats('Unknown')}>
-              Unknown
-            </Button>
-            <Button title="Cualquiera" onPress={() => filterByStats('')}>
-              Cualquiera
-            </Button>
+            <TouchableOpacity style={styles.box} title="Dead" onPress={() => filterByStats('Dead')}>
+              <Text>Dead</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box} title="Alive" onPress={() => filterByStats('Alive')}>
+             <Text>Alive</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box} title="Unknown" onPress={() => filterByStats('Unknown')}>
+              <Text>Unknown</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box} title="Cualquiera" onPress={() => filterByStats('')}>
+              <Text>Cualquiera</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View>
-          <Text>Genero</Text>
+          <Text style={styles.text3}>Genero</Text>
           <View style={styles.gender}>
             <Button title="Female" onPress={() => filterByGender('Female')}>
               Female
@@ -169,13 +191,20 @@ const Screen3 = () => {
           </View>
         </View>
       </View>
+      <TouchableOpacity style={styles.close} onPress={() => setShowModal(false)}>
+              <Text style={styles.x}>Apply</Text>
+      </TouchableOpacity>
+      </Modal>
+      </View>
+      </View>
+      
 
       {loading ? (
         <ActivityIndicator size="large" color="grey" animating={loading} />
       ) : (
         <FlatList
           style={({height: '100%'}, {width: '100%'})}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item, index) => String(item.id + index)}
           data={characters}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -288,4 +317,109 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     width: '90%',
   },
+  x: {
+    fontSize: 30,
+    padding: 10,
+    fontWeight: 'bold',
+    borderColor: 'black',
+    borderWidth: 3,
+    alignSelf: 'center',
+    backgroundColor: 'grey'
+
+  },
+  info: {
+    fontSize: 20,
+    padding: 10,
+    marginLeft: 30, 
+  },
+  button: {
+    marginBottom: 10,
+    marginRight: 5,
+    width: 50,
+    height: 60,
+    // alignItems: 'flex-end',
+    backgroundColor: 'grey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'black',
+    borderWidth: 2,
+    //marginLeft: 300,
+    alignSelf: 'flex-end',
+    //justifyContent: 'center',
+    //textAlignVertical: 'center',
+    borderRadius: 20,
+  },
+  buttonText: {
+    padding: 10,
+    alignSelf: 'center',
+    color: 'white',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    //marginRight: 10,
+    textAlignVertical: 'center',
+  },
+
+  filter: {
+    marginTop:'15%',
+    borderColor: 'black',
+    alignSelf: 'center',
+    borderWidth: 3,
+    width: 200,
+    justifyContent: 'center',
+    borderRadius: 15,
+    backgroundColor: 'grey',
+
+  },
+  filterText: {
+    alignSelf: 'center',
+    fontSize: 20,
+},  
+inputContainer: {
+  flexDirection: 'row',
+  //justifyContent: 'space-around',
+  borderColor: 'grey',
+  borderWidth: 3,
+  width: '100%',
+
+  
+},
+text2: {
+  padding: 10,
+  //justifyContent:'left',
+  marginLeft: 0,
+  fontSize: 17,
+  fontWeight: 'bold',
+},
+searchBar: {
+  width: '70%',
+},
+text3: {
+  alignSelf: 'flex-start',
+  //alignContent: 't',
+  padding: 10,
+  fontSize: 17,
+  fontWeight: 'bold',
+  width: '30%',
+
+},
+status: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+box: {
+  borderColor: 'black',
+  borderWidth: 3,
+  width: '24%',
+  marginHorizontal: 2,
+  
+  
+  padding: 10,
+
+}
+
 });
