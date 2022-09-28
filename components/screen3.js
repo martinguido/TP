@@ -26,7 +26,7 @@ const Screen3 = () => {
   const [type, setType] = useState('');
   const [showModal, setShowModal] = useState(false);
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
-  const defaultFontSize = 53;
+  const defaultFontSize = 50;
   const iconSize = defaultFontSize * fontScale;
   const [color, setColor] = useState('grey');
   const handleClick = color => setColor(color);
@@ -126,14 +126,14 @@ const Screen3 = () => {
               name="filter"
               color="white"
               size={iconSize}
-              style={{marginBottom: '5%'}}
+              //style={{marginBottom: '2%'}}
             />
 
           </TouchableOpacity>
         </View>
         <View>
           <Modal transparent={true} visible={showModal} animationType="fade">
-          <View style={styles.modalContainer}>
+          
           <View style={styles.modalCard}>
             <View style={styles.container2}>
             <View style={styles.containerInputs}>
@@ -237,7 +237,7 @@ const Screen3 = () => {
               </TouchableOpacity>
             </View>
           </View>
-          </View>
+         
           </Modal>
         </View>
       </View>

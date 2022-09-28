@@ -19,9 +19,9 @@ export default StyleSheet.create({
     height: '5%',
   },
   searchBar: {
-    //backgroundColor: 'white',
     flex: 1,
     flexDirection: 'row',
+    color: 'white',
     width: '60%',
     height: '80%',
     fontSize: 14,
@@ -29,6 +29,8 @@ export default StyleSheet.create({
     borderRadius: 15,
     borderWidth: 3,
     borderColor: 'grey',
+    marginRight: '6%',
+    marginLeft: '2%',
     paddingLeft: '6%',
 
   },
@@ -39,18 +41,6 @@ export default StyleSheet.create({
     borderRadius: 30,
     alignSelf: 'center',
   },
-  /*filter_icon: {
-    width: '10%',
-    marginLeft: '5%',
-    height: '100%',
-    borderRadius: 30,
-    color: 'white',
-    justifyContent: 'space-evenly',
-    fontSize: 30,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    backgroundColor: 'black',
-  },*/
   loader: {
     width: '100%',
     backgroundColor: 'rgba(255,255,255,1)',
@@ -64,16 +54,14 @@ export default StyleSheet.create({
     flex: 1,
   },
   container2: {
-    marginTop: 70,
-    margin: 15,
-    //justifyContent: 'space-between',
+    marginTop: '12%',
+    margin: '5%',
     alignItems: 'center',
     flexDirection: 'column',
     width: '90%',
-    //backgroundColor: '#d9dbda'
     backgroundColor: 'rgba(0, 0, 0, 0.93)',
     borderRadius: 15,
-    height: '77%',
+    height: '73%',
     borderWidth: 3,
     borderColor: 'white',
   },
@@ -83,7 +71,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     marginTop: '3%',
-   // backgroundColor: '#d9dbda',
+  
   },
   gender: {
     justifyContent: 'space-between',
@@ -92,22 +80,6 @@ export default StyleSheet.create({
     width: '90%',
     backgroundColor: '#d9dbda',
   },
- /* searchBar__clicked: {
-    padding: 10,
-    width: '95%',
-    height: 40,
-    flexDirection: 'row',
-    backgroundColor: '#d9dbda',
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  } /*
-  input: {
-    fontSize: 30,
-    marginLeft: 10,
-    width: '90%',
-  },
- */
   apply: {
     fontSize: 15,
     padding: 10,
@@ -119,47 +91,13 @@ export default StyleSheet.create({
     borderWidth: 3,
     alignSelf: 'center',
     
-  } /*,
-   ,
-  info: {
-    fontSize: 20,
-    padding: 10,
-    marginLeft: 30,
   },
-  button: {
-    marginBottom: 10,
-    marginRight: 5,
-    width: 50,
-    height: 60,
-    backgroundColor: 'grey',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'black',
-    borderWidth: 2,
-    alignSelf: 'flex-end',
-    borderRadius: 20,
-  },,
-  buttonText: {
-    padding: 10,
-    alignSelf: 'center',
-    color: 'white',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlignVertical: 'center',
-  },
-*/,
   filter: {
-    marginTop: '8%',
+    marginTop: '12%',
     borderColor: 'black',
     alignSelf: 'flex-end',
-    //borderWidth: 3,
     width: '10%',
     justifyContent: 'flex-end',
-    //borderRadius: 15,
-    //backgroundColor: 'grey',
     marginRight: '10%',
     marginLeft: '10%',
   },
@@ -169,8 +107,6 @@ export default StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
-    //borderColor: 'grey',
-    //borderWidth: 3,
     width: '100%',
   },
   text2: {
@@ -203,7 +139,6 @@ export default StyleSheet.create({
   },
   status2: {
     flexDirection: 'row',
-    //justifyContent: 'space-between',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '3%',
@@ -220,7 +155,6 @@ export default StyleSheet.create({
   },
  
   searchName: {
-    //backgroundColor: 'grey',
     width: '73%',
     height: '50%',
     marginTop: '13%',
