@@ -7,9 +7,12 @@ import {
   Text,
   Modal,
   TouchableOpacity,
+  PixelRatio,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Card from './card';
 import styles from './Screen3_component.style.js';
+
 
 const Screen3 = () => {
   const [characters, setCharacters] = useState([]);
@@ -24,6 +27,9 @@ const Screen3 = () => {
   const [showModal, setShowModal] = useState(false);
   const [colour, setColour] = useState('grey');
   const handleClick = color => setColour(color);
+  const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
+  const defaultFontSize = 55;
+  const iconSize = defaultFontSize * fontScale;
 
   const renderItem = ({item}) => (
     <Card
@@ -107,8 +113,8 @@ const Screen3 = () => {
       <View>
         <View style={styles.filtersContainer}>
           <TextInput
-            placeholder="Type name..."
-            placeholderTextColor="black"
+            placeholder="Search name..."
+            placeholderTextColor="grey"
             style={styles.searchName}
             value={search}
             onChangeText={text => filterByName(text)}
@@ -116,22 +122,21 @@ const Screen3 = () => {
           <TouchableOpacity
             style={styles.filter}
             onPress={() => setShowModal(true)}>
-            <Text style={styles.filterText}>Fltr</Text>
+            <Icon
+              name="filter"
+              color="white"
+              size={iconSize}
+              style={{marginTop: '5%'}}
+            />
+
           </TouchableOpacity>
         </View>
         <View>
-          <Modal transparent={true} visible={showModal} animationType="slide">
+          <Modal transparent={true} visible={showModal} animationType="fade">
+          <View style={styles.modalContainer}>
+          <View style={styles.modalCard}>
             <View style={styles.container2}>
-              <View style={styles.inputContainer}>
-                <Text style={styles.text2}>Name:</Text>
-                <TextInput
-                  placeholder="Type name..."
-                  placeholderTextColor="white"
-                  style={styles.searchBar}
-                  value={search}
-                  onChangeText={text => filterByName(text)}
-                />
-              </View>
+            <View style={styles.containerInputs}>
               <View style={styles.inputContainer}>
                 <Text style={styles.text2}>Specie:</Text>
                 <TextInput
@@ -152,16 +157,16 @@ const Screen3 = () => {
                   onChangeText={t => filterByType(t)}
                 />
               </View>
-
+              </View>
               <View>
+              <View style= {styles.options}>
                 <Text style={styles.text3}>Status:</Text>
                 <View style={styles.status}>
                   <TouchableOpacity
                     style={[styles.box, {backgroundColor: colour}]}
                     title="Dead"
                     /*onPressIn={() => handleClick('red')}*/ onPress={() => {
-                      filterByStats('Dead'), handleClick('red');
-                    }}>
+                      filterByStats('Dead')}}>
                     <Text>Dead</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -184,7 +189,6 @@ const Screen3 = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View>
                 <Text style={styles.text3}>Genre:</Text>
                 <View style={styles.status2}>
                   <TouchableOpacity
@@ -197,7 +201,7 @@ const Screen3 = () => {
                     style={styles.box2}
                     title="Male"
                     onPress={() => filterByGender('Male')}>
-                    <Text>Male</Text>
+                    <Text style={styles.text4}>Male</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box2}
@@ -224,9 +228,11 @@ const Screen3 = () => {
               <TouchableOpacity
                 style={styles.close}
                 onPress={() => setShowModal(false)}>
-                <Text style={styles.x}>Apply</Text>
+                <Text style={styles.apply}>Apply</Text>
               </TouchableOpacity>
             </View>
+          </View>
+          </View>
           </Modal>
         </View>
       </View>

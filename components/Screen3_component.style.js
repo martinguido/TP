@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 
+
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -12,20 +13,24 @@ export default StyleSheet.create({
   search: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '5%',
+    marginTop: '2%',
     marginBottom: '3%',
     width: '80%',
     height: '5%',
   },
-  searchbar: {
-    backgroundColor: 'white',
+  searchBar: {
+    //backgroundColor: 'white',
     flex: 1,
     flexDirection: 'row',
-    width: '70%',
-    fontSize: 18,
-    fontWeight: 'bold',
-    borderRadius: 20,
+    width: '60%',
+    height: '80%',
+    fontSize: 14,
+    marginTop: '5%',
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: 'grey',
     paddingLeft: '6%',
+
   },
   separator: {
     width: '90%',
@@ -99,14 +104,16 @@ export default StyleSheet.create({
     width: '90%',
   },
  */,
-  x: {
-    fontSize: 30,
+  apply: {
+    fontSize: 15,
     padding: 10,
+    borderRadius: 15,
+    marginBottom: '10%',
     fontWeight: 'bold',
     borderColor: 'black',
     borderWidth: 3,
     alignSelf: 'center',
-    backgroundColor: 'grey',
+    
   } /*,
    ,
   info: {
@@ -140,15 +147,16 @@ export default StyleSheet.create({
   },
 */,
   filter: {
-    marginTop: '15%',
+    marginTop: '8%',
     borderColor: 'black',
     alignSelf: 'flex-end',
-    borderWidth: 3,
+    //borderWidth: 3,
     width: '10%',
     justifyContent: 'flex-end',
-    borderRadius: 15,
-    backgroundColor: 'grey',
-    marginHorizontal: '12%',
+    //borderRadius: 15,
+    //backgroundColor: 'grey',
+    marginRight: '10%',
+    marginLeft: '10%',
   },
   filterText: {
     alignSelf: 'center',
@@ -156,30 +164,35 @@ export default StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
-    borderColor: 'grey',
-    borderWidth: 3,
+    //borderColor: 'grey',
+    //borderWidth: 3,
     width: '100%',
   },
   text2: {
     padding: 5,
-    marginLeft: 0,
+    marginTop: '5%',
     fontSize: 17,
+    width: '20%',
     fontWeight: 'bold',
   },
 
   text3: {
     alignSelf: 'flex-start',
-    padding: 5,
+    padding: 2,
+    marginLeft: '2%',
     fontSize: 17,
+    marginTop: '5%',
     fontWeight: 'bold',
     width: '30%',
   },
   box: {
-    borderColor: 'black',
+    borderColor: 'grey',
     borderWidth: 3,
-    width: '24%',
-    marginHorizontal: 2,
-    padding: 10,
+    width: '26%',
+    marginHorizontal: '1%',
+    padding: 5,
+    borderRadius: 15,
+    alignItems: 'center',
   },
   status2: {
     flexDirection: 'row',
@@ -187,26 +200,45 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+
   },
   box2: {
-    borderColor: 'black',
+    borderColor: 'grey',
     borderWidth: 3,
-    width: '32%',
-    marginHorizontal: 2,
-    padding: 10,
+    width: '31%',
+    marginHorizontal: '1%',
+    padding: 5,
+    borderRadius: 15,
+    alignItems: 'center',
   },
+ 
   searchName: {
     //backgroundColor: 'grey',
     width: '70%',
-    height: 40,
-    marginTop: 50,
+    height: '40%',
+    marginTop: '13%',
+    marginLeft: '10%',
     flexDirection: 'row',
     backgroundColor: '#d9dbda',
     borderRadius: 15,
+    justifyContent: 'flex-start'
   },
   filtersContainer: {
     flexDirection: 'row',
     color: 'grey',
-    marginHorizontal: '4%',
+    marginHorizontal: '8%',
+    backgroundColor: 'black',
+    //padding: 10,
+    width: '90%'
+  
   },
+  options:
+  {
+    marginVertical: '5%',
+    marginTop: '5%',
+    marginBottom: '10%',
+  },  
+    
+  
+
 });
