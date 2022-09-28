@@ -28,8 +28,6 @@ const Screen3 = () => {
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 50;
   const iconSize = defaultFontSize * fontScale;
-  const [color, setColor] = useState('grey');
-  const handleClick = color => setColor(color);
 
   const renderItem = ({item}) => (
     <Card

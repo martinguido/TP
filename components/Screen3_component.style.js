@@ -95,7 +95,7 @@ export default StyleSheet.create({
   filter: {
     marginTop: '12%',
     borderColor: 'black',
-    alignSelf: 'flex-end',
+    //alignSelf: 'flex-end',
     width: '10%',
     justifyContent: 'flex-end',
     marginRight: '10%',
@@ -139,7 +139,7 @@ export default StyleSheet.create({
   },
   status2: {
     flexDirection: 'row',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
     marginTop: '3%',
 
