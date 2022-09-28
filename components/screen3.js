@@ -25,11 +25,11 @@ const Screen3 = () => {
   const [gender, setGender] = useState('');
   const [type, setType] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [colour, setColour] = useState('grey');
-  const handleClick = color => setColour(color);
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
-  const defaultFontSize = 55;
+  const defaultFontSize = 53;
   const iconSize = defaultFontSize * fontScale;
+  const [color, setColor] = useState('grey');
+  const handleClick = color => setColor(color);
 
   const renderItem = ({item}) => (
     <Card
@@ -113,7 +113,7 @@ const Screen3 = () => {
       <View>
         <View style={styles.filtersContainer}>
           <TextInput
-            placeholder="Search name..."
+            placeholder=" Search name..."
             placeholderTextColor="grey"
             style={styles.searchName}
             value={search}
@@ -126,7 +126,7 @@ const Screen3 = () => {
               name="filter"
               color="white"
               size={iconSize}
-              style={{marginTop: '5%'}}
+              style={{marginBottom: '5%'}}
             />
 
           </TouchableOpacity>
@@ -141,73 +141,78 @@ const Screen3 = () => {
                 <Text style={styles.text2}>Specie:</Text>
                 <TextInput
                   placeholder="Type specie..."
-                  placeholderTextColor="black"
+                  placeholderTextColor="white"
                   style={styles.searchBar}
                   value={species}
                   onChangeText={s => filterBySpecies(s)}
                 />
               </View>
+          
               <View style={styles.inputContainer}>
                 <Text style={styles.text2}>Type:</Text>
                 <TextInput
                   placeholder="Type type..."
-                  placeholderTextColor="black"
+                  placeholderTextColor="white"
                   style={styles.searchBar}
                   value={type}
                   onChangeText={t => filterByType(t)}
                 />
               </View>
               </View>
+              <View style={styles.separator2} />
               <View>
               <View style= {styles.options}>
                 <Text style={styles.text3}>Status:</Text>
                 <View style={styles.status}>
+
                   <TouchableOpacity
-                    style={[styles.box, {backgroundColor: colour}]}
+                    style={styles.box}
                     title="Dead"
-                    /*onPressIn={() => handleClick('red')}*/ onPress={() => {
+                    onPress={() => {
                       filterByStats('Dead')}}>
-                    <Text>Dead</Text>
+                    <Text style={styles.buttons}>Dead</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box}
                     title="Alive"
                     onPress={() => filterByStats('Alive')}>
-                    <Text>Alive</Text>
+                    <Text style={styles.buttons}>Alive</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box}
                     title="Unknown"
                     onPress={() => filterByStats('Unknown')}>
-                    <Text>Unknown</Text>
+                    <Text style={styles.buttons}>Unknown</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box}
                     title="Cualquiera"
                     onPress={() => filterByStats('')}>
-                    <Text>Any</Text>
+                    <Text style={styles.buttons}>Any</Text>
                   </TouchableOpacity>
                 </View>
+              
               </View>
+              
                 <Text style={styles.text3}>Genre:</Text>
                 <View style={styles.status2}>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Female"
                     onPress={() => filterByGender('Female')}>
-                    <Text>Female</Text>
+                    <Text style={styles.buttons}>Female</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Male"
                     onPress={() => filterByGender('Male')}>
-                    <Text style={styles.text4}>Male</Text>
+                    <Text style={styles.text4} style={styles.buttons}>Male</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Genderless"
                     onPress={() => filterByGender('Genderless')}>
-                    <Text>Genderless</Text>
+                    <Text style={styles.buttons}>Genderless</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.status2}>
@@ -215,13 +220,13 @@ const Screen3 = () => {
                     style={styles.box2}
                     title="Unknown"
                     onPress={() => filterByGender('Unknown')}>
-                    <Text>Unknown</Text>
+                    <Text style={styles.buttons}>Unknown</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Cualquiera"
                     onPress={() => filterByGender('')}>
-                    <Text>Any</Text>
+                    <Text style={styles.buttons}>Any</Text>
                   </TouchableOpacity>
                 </View>
               </View>

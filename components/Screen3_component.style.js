@@ -39,7 +39,7 @@ export default StyleSheet.create({
     borderRadius: 30,
     alignSelf: 'center',
   },
-  filter_icon: {
+  /*filter_icon: {
     width: '10%',
     marginLeft: '5%',
     height: '100%',
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     backgroundColor: 'black',
-  },
+  },*/
   loader: {
     width: '100%',
     backgroundColor: 'rgba(255,255,255,1)',
@@ -66,20 +66,24 @@ export default StyleSheet.create({
   container2: {
     marginTop: 70,
     margin: 15,
-    justifyContent: 'space-between',
+    //justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column',
     width: '90%',
-    backgroundColor: '#d9dbda',
+    //backgroundColor: '#d9dbda'
+    backgroundColor: 'rgba(0, 0, 0, 0.93)',
     borderRadius: 15,
-    height: 600,
+    height: '77%',
+    borderWidth: 3,
+    borderColor: 'white',
   },
   status: {
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
     width: '90%',
-    backgroundColor: '#d9dbda',
+    marginTop: '3%',
+   // backgroundColor: '#d9dbda',
   },
   gender: {
     justifyContent: 'space-between',
@@ -88,7 +92,7 @@ export default StyleSheet.create({
     width: '90%',
     backgroundColor: '#d9dbda',
   },
-  searchBar__clicked: {
+ /* searchBar__clicked: {
     padding: 10,
     width: '95%',
     height: 40,
@@ -103,14 +107,15 @@ export default StyleSheet.create({
     marginLeft: 10,
     width: '90%',
   },
- */,
+ */
   apply: {
     fontSize: 15,
     padding: 10,
     borderRadius: 15,
-    marginBottom: '10%',
+    marginTop: '7%',
     fontWeight: 'bold',
-    borderColor: 'black',
+    borderColor: 'white',
+    color: 'white',
     borderWidth: 3,
     alignSelf: 'center',
     
@@ -174,6 +179,7 @@ export default StyleSheet.create({
     fontSize: 17,
     width: '20%',
     fontWeight: 'bold',
+    color: 'white',
   },
 
   text3: {
@@ -183,6 +189,7 @@ export default StyleSheet.create({
     fontSize: 17,
     marginTop: '5%',
     fontWeight: 'bold',
+    color: 'white',
     width: '30%',
   },
   box: {
@@ -199,7 +206,7 @@ export default StyleSheet.create({
     //justifyContent: 'space-between',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: '3%',
 
   },
   box2: {
@@ -214,8 +221,8 @@ export default StyleSheet.create({
  
   searchName: {
     //backgroundColor: 'grey',
-    width: '70%',
-    height: '40%',
+    width: '73%',
+    height: '50%',
     marginTop: '13%',
     marginLeft: '10%',
     flexDirection: 'row',
@@ -228,7 +235,7 @@ export default StyleSheet.create({
     color: 'grey',
     marginHorizontal: '8%',
     backgroundColor: 'black',
-    //padding: 10,
+    padding: 7,
     width: '90%'
   
   },
@@ -238,7 +245,17 @@ export default StyleSheet.create({
     marginTop: '5%',
     marginBottom: '10%',
   },  
-    
+  separator2: {
+    width: '75%',
+    height: '1%',
+    backgroundColor: 'white',
+    borderRadius: 30,
+    alignSelf: 'center',
+    marginTop: '14%',
+  },
+  buttons: {
+    color: 'white',
+  }
   
 
 });
