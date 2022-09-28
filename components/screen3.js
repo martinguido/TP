@@ -7,9 +7,12 @@ import {
   Text,
   Modal,
   TouchableOpacity,
+  PixelRatio,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Card from './card';
 import styles from './Screen3_component.style.js';
+
 
 const Screen3 = () => {
   const [characters, setCharacters] = useState([]);
@@ -22,8 +25,11 @@ const Screen3 = () => {
   const [gender, setGender] = useState('');
   const [type, setType] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [colour, setColour] = useState('grey');
-  const handleClick = color => setColour(color);
+  const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
+  const defaultFontSize = 50;
+  const iconSize = defaultFontSize * fontScale;
+  const [color, setColor] = useState('grey');
+  const handleClick = color => setColor(color);
 
   const renderItem = ({item}) => (
     <Card
@@ -107,8 +113,8 @@ const Screen3 = () => {
       <View>
         <View style={styles.filtersContainer}>
           <TextInput
-            placeholder="Type name..."
-            placeholderTextColor="black"
+            placeholder=" Search name..."
+            placeholderTextColor="grey"
             style={styles.searchName}
             value={search}
             onChangeText={text => filterByName(text)}
@@ -116,94 +122,97 @@ const Screen3 = () => {
           <TouchableOpacity
             style={styles.filter}
             onPress={() => setShowModal(true)}>
-            <Text style={styles.filterText}>Fltr</Text>
+            <Icon
+              name="filter"
+              color="white"
+              size={iconSize}
+              //style={{marginBottom: '2%'}}
+            />
+
           </TouchableOpacity>
         </View>
         <View>
-          <Modal transparent={true} visible={showModal} animationType="slide">
+          <Modal transparent={true} visible={showModal} animationType="fade">
+          
+          <View style={styles.modalCard}>
             <View style={styles.container2}>
-              <View style={styles.inputContainer}>
-                <Text style={styles.text2}>Name:</Text>
-                <TextInput
-                  placeholder="Type name..."
-                  placeholderTextColor="white"
-                  style={styles.searchBar}
-                  value={search}
-                  onChangeText={text => filterByName(text)}
-                />
-              </View>
+            <View style={styles.containerInputs}>
               <View style={styles.inputContainer}>
                 <Text style={styles.text2}>Specie:</Text>
                 <TextInput
                   placeholder="Type specie..."
-                  placeholderTextColor="black"
+                  placeholderTextColor="white"
                   style={styles.searchBar}
                   value={species}
                   onChangeText={s => filterBySpecies(s)}
                 />
               </View>
+          
               <View style={styles.inputContainer}>
                 <Text style={styles.text2}>Type:</Text>
                 <TextInput
                   placeholder="Type type..."
-                  placeholderTextColor="black"
+                  placeholderTextColor="white"
                   style={styles.searchBar}
                   value={type}
                   onChangeText={t => filterByType(t)}
                 />
               </View>
-
+              </View>
+              <View style={styles.separator2} />
               <View>
+              <View style= {styles.options}>
                 <Text style={styles.text3}>Status:</Text>
                 <View style={styles.status}>
+
                   <TouchableOpacity
-                    style={[styles.box, {backgroundColor: colour}]}
+                    style={styles.box}
                     title="Dead"
-                    /*onPressIn={() => handleClick('red')}*/ onPress={() => {
-                      filterByStats('Dead'), handleClick('red');
-                    }}>
-                    <Text>Dead</Text>
+                    onPress={() => {
+                      filterByStats('Dead')}}>
+                    <Text style={styles.buttons}>Dead</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box}
                     title="Alive"
                     onPress={() => filterByStats('Alive')}>
-                    <Text>Alive</Text>
+                    <Text style={styles.buttons}>Alive</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box}
                     title="Unknown"
                     onPress={() => filterByStats('Unknown')}>
-                    <Text>Unknown</Text>
+                    <Text style={styles.buttons}>Unknown</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box}
                     title="Cualquiera"
                     onPress={() => filterByStats('')}>
-                    <Text>Any</Text>
+                    <Text style={styles.buttons}>Any</Text>
                   </TouchableOpacity>
                 </View>
+              
               </View>
-              <View>
+              
                 <Text style={styles.text3}>Genre:</Text>
                 <View style={styles.status2}>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Female"
                     onPress={() => filterByGender('Female')}>
-                    <Text>Female</Text>
+                    <Text style={styles.buttons}>Female</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Male"
                     onPress={() => filterByGender('Male')}>
-                    <Text>Male</Text>
+                    <Text style={styles.text4} style={styles.buttons}>Male</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Genderless"
                     onPress={() => filterByGender('Genderless')}>
-                    <Text>Genderless</Text>
+                    <Text style={styles.buttons}>Genderless</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.status2}>
@@ -211,22 +220,24 @@ const Screen3 = () => {
                     style={styles.box2}
                     title="Unknown"
                     onPress={() => filterByGender('Unknown')}>
-                    <Text>Unknown</Text>
+                    <Text style={styles.buttons}>Unknown</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.box2}
                     title="Cualquiera"
                     onPress={() => filterByGender('')}>
-                    <Text>Any</Text>
+                    <Text style={styles.buttons}>Any</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <TouchableOpacity
                 style={styles.close}
                 onPress={() => setShowModal(false)}>
-                <Text style={styles.x}>Apply</Text>
+                <Text style={styles.apply}>Apply</Text>
               </TouchableOpacity>
             </View>
+          </View>
+         
           </Modal>
         </View>
       </View>
