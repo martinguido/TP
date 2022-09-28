@@ -6,7 +6,7 @@ import {
   FlatList,
   TextInput,
   SafeAreaView,
-  Text
+  Text,
 } from 'react-native';
 import Card from './card';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,7 +22,6 @@ const Screen3 = () => {
 
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
-  
 
   /*
   fetch('https://rickandmortyapi.com/api/character?page=1')
@@ -34,27 +33,28 @@ const Screen3 = () => {
     });
  */
   const renderItem = ({item}) => (
-    <Card imagen={item.image} nombre={item.name} estado={item.status} especie={item.species} genero={item.gender} origen={item.origin.name} ubicacion={item.location.name}/>
+    <Card
+      imagen={item.image}
+      nombre={item.name}
+      estado={item.status}
+      especie={item.species}
+      genero={item.gender}
+      origen={item.origin.name}
+      ubicacion={item.location.name}
+    />
     //<MyModal estado={item.status} especie={item.species} genero={item.gender} />
-    
-    
-  
   );
 
-  
-  const searchFilterFunction = (text) => {
+  const searchFilterFunction = text => {
     // Check if searched text is not blank
     if (text) {
       // Inserted text is not blank
       // Filter the masterDataSource
       // Update FilteredDataSource
-      const newData = characters.filter(
-        function (item) {
-          const itemData = item.name
-            ? item.name.toUpperCase()
-            : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
+      const newData = characters.filter(function (item) {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
       });
       setFilteredDataSource(newData);
       setSearch(text);
@@ -66,12 +66,11 @@ const Screen3 = () => {
     }
   };
 
-  const getItem = (item) => {
+  const getItem = item => {
     // Function for click on an item
     alert('Id : ' + item.id + ' Name : ' + item.name);
   };
 
-  
   const setMoreData = () => {
     if (next !== null) {
       setCurrPage(prevPage => prevPage + 1);
@@ -120,18 +119,16 @@ const Screen3 = () => {
       });
   }, [currPage]);
   return (
- 
     <View style={styles.container}>
       <View>
-      <MySearchBar 
-            renderItem={renderItem}
-            search={search}
-            setSearch={setSearch}
-            filteredDataSource={filteredDataSource}
-          />
+        <MySearchBar
+          renderItem={renderItem}
+          search={search}
+          setSearch={setSearch}
+          filteredDataSource={filteredDataSource}
+        />
       </View>
-      
-       
+
       {loading ? (
         <ActivityIndicator size="large" color="grey" animating={loading} />
       ) : (
@@ -209,5 +206,4 @@ const styles = StyleSheet.create({
   loaderactivity: {
     flex: 1,
   },
-  
 });
