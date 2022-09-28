@@ -24,6 +24,12 @@ const Screen3 = () => {
   const [gender, setGender] = useState('');
   const [type, setType] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [colour, setColour] = useState('grey');
+  const handleClick = (color) =>
+      (
+        setColour(color)
+      );
+
 
 
   const renderItem = ({item}) => (
@@ -112,27 +118,35 @@ const Screen3 = () => {
   return (
     <View style={styles.container}>
     <View>
+    <View style={styles.filtersContainer}>
+    <TextInput
+          placeholder="Type name..."
+          placeholderTextColor="black"
+          style={styles.searchName}
+          value={search}
+          onChangeText={text => filterByName(text)}
+        />
     <TouchableOpacity style={styles.filter} onPress={() => setShowModal(true)}>
-        <Text style= {styles.filterText}>Filter</Text>
+        <Text style= {styles.filterText}>Fltr</Text>
     </TouchableOpacity>
-
+    </View>
     <View>
       <Modal transparent={true} visible={showModal} animationType="slide">
       <View style={styles.container2}>
         <View style={styles.inputContainer}>
-        <Text style={styles.text2}>Nombre:</Text>
+        <Text style={styles.text2}>Name:</Text>
         <TextInput
-          placeholder="Escriba el nombre aca..."
-          placeholderTextColor="black"
+          placeholder="Type name..."
+          placeholderTextColor="white"
           style={styles.searchBar}
           value={search}
           onChangeText={text => filterByName(text)}
         />
         </View>
         <View style={styles.inputContainer}>
-        <Text style={styles.text2}>Especie:</Text>
+        <Text style={styles.text2}>Specie:</Text>
         <TextInput
-          placeholder="Escriba la especie aca..."
+          placeholder="Type specie..."
           placeholderTextColor="black"
           style={styles.searchBar}
           value={species}
@@ -140,9 +154,9 @@ const Screen3 = () => {
         />
         </View>
         <View style={styles.inputContainer}>
-        <Text style={styles.text2}>Tipo:</Text>
+        <Text style={styles.text2}>Type:</Text>
         <TextInput
-          placeholder="Escriba el tipo aca..."
+          placeholder="Type type..."
           placeholderTextColor="black"
           style={styles.searchBar}
           value={type}
@@ -152,9 +166,9 @@ const Screen3 = () => {
        
         <View>
 
-          <Text style={styles.text3}>Estado</Text>
+          <Text style={styles.text3}>Status:</Text>
           <View style={styles.status}>
-            <TouchableOpacity style={styles.box} title="Dead" onPress={() => filterByStats('Dead')}>
+            <TouchableOpacity style={[styles.box, { backgroundColor: colour }]} title="Dead" /*onPressIn={() => handleClick('red')}*/ onPress={() => {filterByStats('Dead'),handleClick('red')}} >
               <Text>Dead</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.box} title="Alive" onPress={() => filterByStats('Alive')}>
@@ -164,36 +178,39 @@ const Screen3 = () => {
               <Text>Unknown</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.box} title="Cualquiera" onPress={() => filterByStats('')}>
-              <Text>Cualquiera</Text>
+              <Text>Any</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View>
-          <Text style={styles.text3}>Genero</Text>
-          <View style={styles.gender}>
-            <Button title="Female" onPress={() => filterByGender('Female')}>
-              Female
-            </Button>
-            <Button title="Male" onPress={() => filterByGender('Male')}>
-              Male
-            </Button>
-            <Button
+          <Text style={styles.text3}>Genre:</Text>
+          <View style={styles.status2}>
+            <TouchableOpacity style={styles.box2} title="Female" onPress={() => filterByGender('Female')}>
+              <Text>Female</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box2} title="Male" onPress={() => filterByGender('Male')}>
+             <Text>Male</Text> 
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.box2}
               title="Genderless"
               onPress={() => filterByGender('Genderless')}>
-              Genderless
-            </Button>
-            <Button title="Unknown" onPress={() => filterByGender('Unknown')}>
-              Unknown
-            </Button>
-            <Button title="Cualquiera" onPress={() => filterByGender('')}>
-              Cualquiera
-            </Button>
+              <Text>Genderless</Text>
+            </TouchableOpacity>
+            </View>
+            <View style={styles.status2}>
+            <TouchableOpacity style={styles.box2} title="Unknown" onPress={() => filterByGender('Unknown')}>
+              <Text>Unknown</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box2} title="Cualquiera" onPress={() => filterByGender('')}>
+              <Text>Any</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </View>
-      <TouchableOpacity style={styles.close} onPress={() => setShowModal(false)}>
+        <TouchableOpacity style={styles.close} onPress={() => setShowModal(false)}>
               <Text style={styles.x}>Apply</Text>
       </TouchableOpacity>
+      </View>
       </Modal>
       </View>
       </View>
@@ -204,7 +221,7 @@ const Screen3 = () => {
       ) : (
         <FlatList
           style={({height: '100%'}, {width: '100%'})}
-          keyExtractor={(item, index) => String(item.id + index)}
+          keyExtractor={item => item.id}
           data={characters}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -318,7 +335,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   x: {
-    fontSize: 30,
+    fontSize: 15,
     padding: 10,
     fontWeight: 'bold',
     borderColor: 'black',
@@ -365,12 +382,14 @@ const styles = StyleSheet.create({
   filter: {
     marginTop:'15%',
     borderColor: 'black',
-    alignSelf: 'center',
+    alignSelf: 'flex-end',
     borderWidth: 3,
-    width: 200,
-    justifyContent: 'center',
+    width: '10%',
+    justifyContent: 'flex-end',
     borderRadius: 15,
     backgroundColor: 'grey',
+    marginHorizontal: '12%'
+
 
   },
   filterText: {
@@ -387,7 +406,7 @@ inputContainer: {
   
 },
 text2: {
-  padding: 10,
+  padding: 5,
   //justifyContent:'left',
   marginLeft: 0,
   fontSize: 17,
@@ -399,7 +418,7 @@ searchBar: {
 text3: {
   alignSelf: 'flex-start',
   //alignContent: 't',
-  padding: 10,
+  padding: 5,
   fontSize: 17,
   fontWeight: 'bold',
   width: '30%',
@@ -409,17 +428,46 @@ status: {
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
 },
 box: {
   borderColor: 'black',
   borderWidth: 3,
   width: '24%',
   marginHorizontal: 2,
-  
-  
   padding: 10,
+},
+status2: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: 10,
+},
+box2: {
+  borderColor: 'black',
+  borderWidth: 3,
+  width: '32%',
+  marginHorizontal: 2,
+  padding: 10,
+  
+},
+searchName: {
+  backgroundColor: 'grey',
+  width: '70%',
+  height: 40,
+  marginTop: 50,
+  flexDirection: 'row',
+    //width: "80%",
+  backgroundColor: '#d9dbda',
+  borderRadius: 15,
 
+},
+filtersContainer: {
+  flexDirection: 'row',
+  color:'grey',
+  marginHorizontal: '4%'
+  
 }
 
 });
