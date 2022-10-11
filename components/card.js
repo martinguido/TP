@@ -9,29 +9,29 @@ const Card = props => {
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 22;
   const iconSize = defaultFontSize * fontScale;
-
+  //<Icon name="info" color="white" size={iconSize} />
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: props.imagen}} />
-      <TouchableOpacity style={styles.overlay}>
-        <Text style={styles.text}>{props.nombre}</Text>
-        <TouchableOpacity onPress={() => setShowModal(true)}>
-          <View style={styles.button}>
-            <Icon name="info" color="white" size={iconSize} />
+      <View style={styles.card_overlay}>
+        <TouchableOpacity style={styles.overlay}>
+          <Text style={styles.text}>{props.nombre}</Text>
+          <TouchableOpacity onPress={() => setShowModal(true)}>
+            <View style={styles.button}></View>
+          </TouchableOpacity>
+          <View>
+            <MyModal
+              estado={props.estado}
+              especie={props.especie}
+              genero={props.genero}
+              origen={props.origen}
+              ubicacion={props.ubicacion}
+              showModal={showModal}
+              setShowModal={setShowModal}
+            />
           </View>
         </TouchableOpacity>
-        <View>
-          <MyModal
-            estado={props.estado}
-            especie={props.especie}
-            genero={props.genero}
-            origen={props.origen}
-            ubicacion={props.ubicacion}
-            showModal={showModal}
-            setShowModal={setShowModal}
-          />
-        </View>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };
