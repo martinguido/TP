@@ -1,4 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, PixelRatio} from 'react-native';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+const fontScale = PixelRatio.getFontScale();
 
 
 export default StyleSheet.create({
@@ -24,14 +26,17 @@ export default StyleSheet.create({
     color: 'white',
     width: '60%',
     height: '80%',
-    fontSize: 14,
+    //fontSize: 14,
+    fontSize: RFPercentage(1.5),
     marginTop: '5%',
+    marginRight: '6%',
+    marginLeft: '2%',
     borderRadius: 15,
     borderWidth: 3,
     borderColor: 'grey',
-    marginRight: '6%',
-    marginLeft: '2%',
     paddingLeft: '6%',
+    padding: '0.8%',
+  
 
   },
   separator: {
@@ -61,9 +66,10 @@ export default StyleSheet.create({
     width: '90%',
     backgroundColor: 'rgba(0, 0, 0, 0.93)',
     borderRadius: 15,
-    height: '73%',
+    height: '85%',
     borderWidth: 3,
     borderColor: 'white',
+   
   },
   status: {
     justifyContent: 'flex-start',
@@ -71,6 +77,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     marginTop: '3%',
+    
   
   },
   gender: {
@@ -81,15 +88,17 @@ export default StyleSheet.create({
     backgroundColor: '#d9dbda',
   },
   apply: {
-    fontSize: 15,
+    //fontSize: 15,
+    fontSize: RFPercentage(2),
     padding: 10,
     borderRadius: 15,
-    marginTop: '7%',
+    marginTop: '8%',
     fontWeight: 'bold',
     borderColor: 'white',
     color: 'white',
-    borderWidth: 3,
+    borderWidth: 2,
     alignSelf: 'center',
+    
     
   },
   filter: {
@@ -103,16 +112,19 @@ export default StyleSheet.create({
   },
   filterText: {
     alignSelf: 'center',
-    fontSize: 20,
+    //fontSize: 20,
+    fontSize: RFPercentage(10),
   },
   inputContainer: {
     flexDirection: 'row',
     width: '100%',
+    
   },
   text2: {
     padding: 5,
     marginTop: '5%',
-    fontSize: 17,
+    //fontSize: 17,
+    fontSize: RFPercentage(1.9),
     width: '20%',
     fontWeight: 'bold',
     color: 'white',
@@ -122,7 +134,8 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
     padding: 2,
     marginLeft: '2%',
-    fontSize: 17,
+   //fontSize: 17,
+    fontSize: RFPercentage(1.9),
     marginTop: '5%',
     fontWeight: 'bold',
     color: 'white',
@@ -160,9 +173,13 @@ export default StyleSheet.create({
     marginTop: '13%',
     marginLeft: '10%',
     flexDirection: 'row',
-    backgroundColor: '#d9dbda',
-    borderRadius: 15,
-    justifyContent: 'flex-start'
+    //backgroundColor: '#d9dbda',
+    borderRadius: 20,
+    justifyContent: 'flex-start',
+    paddingLeft: '2%',
+    backgroundColor: '#292A2B',
+    borderColor: 'white',
+    borderWidth: 2,
   },
   filtersContainer: {
     flexDirection: 'row',
@@ -170,7 +187,7 @@ export default StyleSheet.create({
     marginHorizontal: '8%',
     backgroundColor: 'black',
     padding: 7,
-    width: '90%'
+    width: '90%',
   
   },
   options:
@@ -189,6 +206,7 @@ export default StyleSheet.create({
   },
   buttons: {
     color: 'white',
+    fontSize: RFPercentage(1.6),
   }
   
 
