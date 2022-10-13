@@ -28,6 +28,8 @@ const Screen3 = () => {
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 50;
   const iconSize = defaultFontSize * fontScale;
+  const SearchSize = 25 * fontScale;
+
 
   const renderItem = ({item}) => (
     <Card
@@ -115,8 +117,9 @@ const Screen3 = () => {
             placeholderTextColor="grey"
             style={styles.searchName}
             value={search}
-            onChangeText={text => filterByName(text)}
-          />
+            onChangeText={text => filterByName(text)}/>
+         
+          
           <TouchableOpacity
             style={styles.filter}
             onPress={() => setShowModal(true)}>
@@ -135,6 +138,17 @@ const Screen3 = () => {
           <View style={styles.modalCard}>
             <View style={styles.container2}>
             <View style={styles.containerInputs}>
+            <View style={styles.inputContainer}>
+                <Text style={styles.text2}>Name:</Text>
+                <TextInput
+                  placeholder="Type name..."
+                  placeholderTextColor="white"
+                  style={styles.searchBar}
+                  value={search}
+                  onChangeText={text => filterByName(text)}
+                  />
+                  
+              </View>
               <View style={styles.inputContainer}>
                 <Text style={styles.text2}>Specie:</Text>
                 <TextInput
@@ -146,6 +160,7 @@ const Screen3 = () => {
                 />
               </View>
           
+              
               <View style={styles.inputContainer}>
                 <Text style={styles.text2}>Type:</Text>
                 <TextInput
