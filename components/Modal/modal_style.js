@@ -40,4 +40,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginBottom: '2.5%',
   },
+  icono: {
+    marginTop: '5%',
+  },
 });

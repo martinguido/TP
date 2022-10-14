@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Modal, PixelRatio} from 'react-native';
-import styles from './Modal_component.style.js';
+import styles from './modal_style.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const MyModal = ({
@@ -34,7 +34,7 @@ const MyModal = ({
               name="remove"
               color="red"
               size={iconSize}
-              style={{marginTop: '5%'}}
+              style={styles.icono}
             />
           </TouchableOpacity>
         </View>

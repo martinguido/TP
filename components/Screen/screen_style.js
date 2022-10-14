@@ -1,7 +1,5 @@
-import {StyleSheet, PixelRatio} from 'react-native';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-const fontScale = PixelRatio.getFontScale();
-
+import {StyleSheet} from 'react-native';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 export default StyleSheet.create({
   container: {
@@ -26,7 +24,6 @@ export default StyleSheet.create({
     color: 'white',
     width: '60%',
     height: '80%',
-    //fontSize: 14,
     fontSize: RFPercentage(1.5),
     marginTop: '5%',
     marginRight: '6%',
@@ -36,8 +33,6 @@ export default StyleSheet.create({
     borderColor: 'grey',
     paddingLeft: '6%',
     padding: '0.8%',
-  
-
   },
   separator: {
     width: '90%',
@@ -69,7 +64,6 @@ export default StyleSheet.create({
     height: '85%',
     borderWidth: 3,
     borderColor: 'white',
-   
   },
   status: {
     justifyContent: 'flex-start',
@@ -77,8 +71,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     marginTop: '3%',
-    
-  
   },
   gender: {
     justifyContent: 'space-between',
@@ -88,7 +80,6 @@ export default StyleSheet.create({
     backgroundColor: '#d9dbda',
   },
   apply: {
-    //fontSize: 15,
     fontSize: RFPercentage(2),
     padding: 10,
     borderRadius: 15,
@@ -98,13 +89,10 @@ export default StyleSheet.create({
     color: 'white',
     borderWidth: 2,
     alignSelf: 'center',
-    
-    
   },
   filter: {
     marginTop: '12%',
     borderColor: 'black',
-    //alignSelf: 'flex-end',
     width: '10%',
     justifyContent: 'flex-end',
     marginRight: '10%',
@@ -112,29 +100,24 @@ export default StyleSheet.create({
   },
   filterText: {
     alignSelf: 'center',
-    //fontSize: 20,
     fontSize: RFPercentage(10),
   },
   inputContainer: {
     flexDirection: 'row',
     width: '100%',
-    
   },
   text2: {
     padding: 5,
     marginTop: '5%',
-    //fontSize: 17,
     fontSize: RFPercentage(1.9),
     width: '20%',
     fontWeight: 'bold',
     color: 'white',
   },
-
   text3: {
     alignSelf: 'flex-start',
     padding: 2,
     marginLeft: '2%',
-   //fontSize: 17,
     fontSize: RFPercentage(1.9),
     marginTop: '5%',
     fontWeight: 'bold',
@@ -152,10 +135,8 @@ export default StyleSheet.create({
   },
   status2: {
     flexDirection: 'row',
-    //alignItems: 'center',
     justifyContent: 'center',
     marginTop: '3%',
-
   },
   box2: {
     borderColor: 'grey',
@@ -166,14 +147,13 @@ export default StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
   },
- 
   searchName: {
     width: '73%',
     height: '50%',
     marginTop: '13%',
     marginLeft: '10%',
     flexDirection: 'row',
-    //backgroundColor: '#d9dbda',
+    color: 'white',
     borderRadius: 20,
     justifyContent: 'flex-start',
     paddingLeft: '2%',
@@ -188,14 +168,12 @@ export default StyleSheet.create({
     backgroundColor: 'black',
     padding: 7,
     width: '90%',
-  
   },
-  options:
-  {
+  options: {
     marginVertical: '5%',
     marginTop: '5%',
     marginBottom: '10%',
-  },  
+  },
   separator2: {
     width: '75%',
     height: '1%',
@@ -207,7 +185,5 @@ export default StyleSheet.create({
   buttons: {
     color: 'white',
     fontSize: RFPercentage(1.6),
-  }
-  
-
+  },
 });

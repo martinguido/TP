@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Screen3 from './components/screen3.js';
+import Screen3 from './components/Screen/index.js';
 
 const App = () => {
   return <Screen3 />;

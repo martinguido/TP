@@ -1,8 +1,5 @@
-import {StyleSheet, PixelRatio} from 'react-native';
-
-const fontScale = PixelRatio.getFontScale();
-const defaultFontSize = 20;
-const iconSize = defaultFontSize * fontScale;
+import {StyleSheet} from 'react-native';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 export default StyleSheet.create({
   card: {
@@ -23,38 +20,29 @@ export default StyleSheet.create({
     borderRadius: 30,
     paddingRight: '15%',
   },
-
   text: {
+    //width: '95%',
     borderWidth: 5,
-    width: '85%',
+    maxWidth: '95%',
     height: '100%',
-    position: 'absolute',
+    //position: 'absolute',
     paddingLeft: '5%',
     paddingBottom: '10%',
-    //minimunFontScale: '24%',
-    allowFontScaling: 'true',
-    numberOfLines: '5',
-    fontSize: 25,
-    adjustsFontSizeToFit: 'true',
+    fontSize: RFPercentage(3),
+    //fontSize: 5,
     color: 'white',
+    flexDirection: 'column',
+    numberOfLines: '3',
+    alignSelf: 'flex-start',
+    adjustsFontSizeToFitWidth: 'true',
     backgroundColor: 'rgba(255,255,255,0)',
     fontWeight: 'bold',
   },
   overlay: {
     height: '100%',
-    //paddingRight: '5%',
     backgroundColor: 'rgba(0,0,0,0.3)',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     justifyContent: 'center',
-  },
-  button: {
-    width: '100%',
-    height: '100%',
-    //backgroundColor: 'rgba(0,0,0,0.4)',
-    //justifyContent: 'center',
-    //alignSelf: 'flex-end',
-    //borderRadius: 100,
-    //alignItems: 'center',
   },
 });
