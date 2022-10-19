@@ -1,4 +1,6 @@
 import {StyleSheet} from 'react-native';
+import {RFPercentage} from 'react-native-responsive-fontsize';
+
 
 export default StyleSheet.create({
   modalContainer: {
@@ -20,14 +22,16 @@ export default StyleSheet.create({
     display: 'flex',
   },
   info: {
-    fontSize: 20,
+    //fontSize: 20,
+    fontSize: RFPercentage(2.5),
     marginVertical: '2%',
     marginLeft: '10%',
     color: 'white',
   },
   title: {
     alignSelf: 'center',
-    fontSize: 30,
+    //fontSize: 30,
+    fontSize: RFPercentage(4),
     fontWeight: 'bold',
     color: 'white',
     marginVertical: '5%',
