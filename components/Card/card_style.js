@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
   text: {
     //width: '95%',
-    borderWidth: 5,
+    //borderWidth: 5,
     maxWidth: '95%',
     height: '100%',
     //position: 'absolute',
