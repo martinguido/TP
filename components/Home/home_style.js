@@ -133,6 +133,16 @@ export default StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
   },
+  boxSelected: {
+    borderColor: 'grey',
+    borderWidth: 3,
+    width: '26%',
+    marginHorizontal: '1%',
+    padding: 5,
+    borderRadius: 15,
+    alignItems: 'center',
+    backgroundColor: 'grey',
+  },
   status2: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -146,6 +156,16 @@ export default StyleSheet.create({
     padding: 5,
     borderRadius: 15,
     alignItems: 'center',
+  },
+  box2Selected: {
+    borderColor: 'grey',
+    borderWidth: 3,
+    width: '31%',
+    marginHorizontal: '1%',
+    padding: 5,
+    borderRadius: 15,
+    alignItems: 'center',
+    backgroundColor: 'grey',
   },
   searchName: {
     width: '73%',
