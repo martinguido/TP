@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Card from '../Card/index.js';
-import styles from './screen_style.js';
+import styles from './home_style.js';
 
-const Screen3 = () => {
+const Home = ({navigation}) => {
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currPage, setCurrPage] = useState(1);
@@ -262,4 +262,4 @@ const Screen3 = () => {
   );
 };
 
-export default Screen3;
+export default Home;
