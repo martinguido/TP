@@ -1,11 +1,10 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useState, useEffect} from 'react';
 import {View, Text, Image, TouchableOpacity, PixelRatio} from 'react-native';
 import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import app from '../connection.js';
-import {onValue, set, ref, getDatabase, remove} from 'firebase/database';
+import {onValue, set, ref, getDatabase} from 'firebase/database';
 
-import deviceInfo from 'react-native-device-info';
 import {Icon} from 'react-native-elements';
 let db = getDatabase(app);
 let charactersOff = {};
@@ -13,30 +12,22 @@ let charactersOff = {};
 const Card = props => {
   const [showModal, setShowModal] = useState(false);
   const [colorIcon, setColorIcon] = useState('white');
-  const [modified, setModified] = useState(0);
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 50;
   const iconSize = defaultFontSize * fontScale;
+  //let deviceID = deviceInfo.getUniqueId()._j;
+  const deviceID = 1000;
   useEffect(() => {
-    const deviceID = deviceInfo.getUniqueId()._j;
-    if (deviceID != null) {
-      let dbRef = ref(db, 'characters/' + deviceID + '/' + props.id);
-      onValue(dbRef, async snapshot => {
-        charactersOff = await snapshot.val();
-        //console.log(dbRef);
-        console.log(charactersOff);
-        if (charactersOff != null) {
-          console.log('Se actualiza' + props.id);
-          setColorIcon('yellow');
-        }
-
-        //charactersOff.shift();
-        //onsole.log(charactersOff);
-      });
-      setModified(prev => prev);
-    }
-  }, [modified, props.id]);
-  const uploadCharacter = (props, deviceID) => {
+    let dbRef = ref(db, 'characters/' + deviceID + '/' + props.id);
+    onValue(dbRef, async snapshot => {
+      charactersOff = await snapshot.val();
+      if (charactersOff != null) {
+        setColorIcon('gold');
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const uploadCharacter = () => {
     db = getDatabase();
     set(ref(db, 'characters/' + deviceID + '/' + props.id), {
       id: props.id,
@@ -48,30 +39,22 @@ const Card = props => {
       origen: props.origen,
       ubicacion: props.ubicacion,
     });
-    console.log('Character agregada correctamente');
   };
-  const deleteCharacter = (props, deviceID) => {
+  const deleteCharacter = () => {
     db = getDatabase();
-    /*ref(db, 'characters/' + deviceID + '/' + props.id)
-      .child(props.id)
-      .remove();*/
     set(ref(db, 'characters/' + deviceID + '/' + props.id), null);
   };
-  const updateDatabase = props => {
-    const deviceID = deviceInfo.getUniqueId()._j;
-    if (modified % 2 == 0 && deviceID != null) {
+
+  const updateDatabase = () => {
+    if (colorIcon === 'white') {
       setColorIcon('gold');
-      uploadCharacter(props, deviceID);
-      setModified(prev => prev + 1);
+      uploadCharacter();
     } else {
-      if (deviceID != null) {
-        setColorIcon('white');
-        deleteCharacter(props, deviceID);
-        console.log('Character eliminado correctamente');
-        setModified(prev => prev + 1);
-      }
+      setColorIcon('white');
+      deleteCharacter();
     }
   };
+
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: props.imagen}} />
@@ -91,7 +74,7 @@ const Card = props => {
           />
           <TouchableOpacity
             style={styles.star}
-            onPress={() => updateDatabase(props)}>
+            onPress={() => updateDatabase()}>
             <Icon name="star" color={colorIcon} size={iconSize} />
           </TouchableOpacity>
         </TouchableOpacity>

@@ -106,6 +106,7 @@ const Home = ({navigation}) => {
           setNext('');
         }
       })
+
       .catch(error => {
         console.log('error');
       });
