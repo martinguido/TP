@@ -30,6 +30,7 @@ const Home = ({navigation}) => {
 
   const renderItem = ({item}) => (
     <Card
+      id={item.id}
       imagen={item.image}
       nombre={item.name}
       estado={item.status}
@@ -169,75 +170,68 @@ const Home = ({navigation}) => {
                   <View style={styles.options}>
                     <Text style={styles.text3}>Status:</Text>
                     <View style={styles.status}>
-
-                    {stats==='Dead'? ( 
-                    
-                    <>
-                      <TouchableOpacity
-                        style={styles.boxSelected}
-                        title="Dead"
-                        onPress={() => {
-                          filterByStats('');
-                        }}>
-                    
-                        <Text style={styles.buttons}>Dead</Text>
-                      </TouchableOpacity>
-                      </>) : (
+                      {stats === 'Dead' ? (
+                        <>
+                          <TouchableOpacity
+                            style={styles.boxSelected}
+                            title="Dead"
+                            onPress={() => {
+                              filterByStats('');
+                            }}>
+                            <Text style={styles.buttons}>Dead</Text>
+                          </TouchableOpacity>
+                        </>
+                      ) : (
                         <TouchableOpacity
-                        style={styles.box}
-                        title="Dead"
-                        onPress={() => {
-                          filterByStats('Dead');
-                        }}>
-                    
-                        <Text style={styles.buttons}>Dead</Text>
-                      </TouchableOpacity>
+                          style={styles.box}
+                          title="Dead"
+                          onPress={() => {
+                            filterByStats('Dead');
+                          }}>
+                          <Text style={styles.buttons}>Dead</Text>
+                        </TouchableOpacity>
                       )}
 
-                      {stats==='Alive'? ( 
-                    
-                      <>
-                      <TouchableOpacity
-                        style={styles.boxSelected}
-                        title="Alive"
-                        onPress={() => filterByStats('')}>
-                        <Text style={styles.buttons}>Alive</Text>
-                      </TouchableOpacity>
-
-                      </>) : (
+                      {stats === 'Alive' ? (
+                        <>
+                          <TouchableOpacity
+                            style={styles.boxSelected}
+                            title="Alive"
+                            onPress={() => filterByStats('')}>
+                            <Text style={styles.buttons}>Alive</Text>
+                          </TouchableOpacity>
+                        </>
+                      ) : (
                         <TouchableOpacity
-                        style={styles.box}
-                        title="Alive"
-                        onPress={() => {
-                          filterByStats('Alive');
-                        }}>
-                    
-                        <Text style={styles.buttons}>Alive</Text>
-                      </TouchableOpacity>
+                          style={styles.box}
+                          title="Alive"
+                          onPress={() => {
+                            filterByStats('Alive');
+                          }}>
+                          <Text style={styles.buttons}>Alive</Text>
+                        </TouchableOpacity>
                       )}
 
-                      {stats==='Unknown'? ( 
-                    
-                    <>
-                      <TouchableOpacity
-                        style={styles.boxSelected}
-                        title="Unknown"
-                        onPress={() => filterByStats('')}>
-                        <Text style={styles.buttons}>Unknown</Text>
-                      </TouchableOpacity>
-                      </>) : (
+                      {stats === 'Unknown' ? (
+                        <>
+                          <TouchableOpacity
+                            style={styles.boxSelected}
+                            title="Unknown"
+                            onPress={() => filterByStats('')}>
+                            <Text style={styles.buttons}>Unknown</Text>
+                          </TouchableOpacity>
+                        </>
+                      ) : (
                         <TouchableOpacity
-                        style={styles.box}
-                        title="Unknown"
-                        onPress={() => {
-                          filterByStats('Unknown');
-                        }}>
-                    
-                        <Text style={styles.buttons}>Unknown</Text>
-                      </TouchableOpacity>
+                          style={styles.box}
+                          title="Unknown"
+                          onPress={() => {
+                            filterByStats('Unknown');
+                          }}>
+                          <Text style={styles.buttons}>Unknown</Text>
+                        </TouchableOpacity>
                       )}
-                      
-                  
+
                       <TouchableOpacity
                         style={styles.box}
                         title="Cualquiera"
@@ -249,86 +243,78 @@ const Home = ({navigation}) => {
 
                   <Text style={styles.text3}>Genre:</Text>
                   <View style={styles.status2}>
-
-
-                  {gender==='Female'? ( 
-                    
-                    <>
-                    <TouchableOpacity
-                      style={styles.box2Selected}
-                      title="Female"
-                      onPress={() => filterByGender('')}>
-                      <Text style={styles.buttons}>Female</Text>
-                    </TouchableOpacity>
-
-                    </>) : (
+                    {gender === 'Female' ? (
+                      <>
+                        <TouchableOpacity
+                          style={styles.box2Selected}
+                          title="Female"
+                          onPress={() => filterByGender('')}>
+                          <Text style={styles.buttons}>Female</Text>
+                        </TouchableOpacity>
+                      </>
+                    ) : (
                       <TouchableOpacity
-                      style={styles.box2}
-                      title="Female"
-                      onPress={() => filterByGender('Female')}>
-                      <Text style={styles.buttons}>Female</Text>
-                    </TouchableOpacity>
+                        style={styles.box2}
+                        title="Female"
+                        onPress={() => filterByGender('Female')}>
+                        <Text style={styles.buttons}>Female</Text>
+                      </TouchableOpacity>
                     )}
 
-                    {gender==='Male'? ( 
-                    
-                    <>
-                    <TouchableOpacity
-                      style={styles.box2Selected}
-                      title="Male"
-                      onPress={() => filterByGender('')}>
-                      <Text style={styles.buttons}>Male</Text>
-                    </TouchableOpacity>
-
-                    </>) : (
+                    {gender === 'Male' ? (
+                      <>
+                        <TouchableOpacity
+                          style={styles.box2Selected}
+                          title="Male"
+                          onPress={() => filterByGender('')}>
+                          <Text style={styles.buttons}>Male</Text>
+                        </TouchableOpacity>
+                      </>
+                    ) : (
                       <TouchableOpacity
-                      style={styles.box2}
-                      title="Male"
-                      onPress={() => filterByGender('Male')}>
-                      <Text style={styles.buttons}>Male</Text>
-                    </TouchableOpacity>
+                        style={styles.box2}
+                        title="Male"
+                        onPress={() => filterByGender('Male')}>
+                        <Text style={styles.buttons}>Male</Text>
+                      </TouchableOpacity>
                     )}
 
-                    {gender==='Genderless'? (   
-                    
-                    <>
-                    <TouchableOpacity
-                      style={styles.box2Selected}
-                      title="Genderless"
-                      onPress={() => filterByGender('')}>
-                      <Text style={styles.buttons}>Genderless</Text>
-                    </TouchableOpacity>
-
-                    </>) : (
-                     <TouchableOpacity
-                     style={styles.box2}
-                     title="Genderless"
-                     onPress={() => filterByGender('Genderless')}>
-                     <Text style={styles.buttons}>Genderless</Text>
-                   </TouchableOpacity>
+                    {gender === 'Genderless' ? (
+                      <>
+                        <TouchableOpacity
+                          style={styles.box2Selected}
+                          title="Genderless"
+                          onPress={() => filterByGender('')}>
+                          <Text style={styles.buttons}>Genderless</Text>
+                        </TouchableOpacity>
+                      </>
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.box2}
+                        title="Genderless"
+                        onPress={() => filterByGender('Genderless')}>
+                        <Text style={styles.buttons}>Genderless</Text>
+                      </TouchableOpacity>
                     )}
-
                   </View>
                   <View style={styles.status2}>
-
-                  {gender==='Unknown'? (   
-                  <>
-                    <TouchableOpacity
-                      style={styles.box2Selected}
-                      title="Unknown"
-                      onPress={() => filterByGender('')}>
-                      <Text style={styles.buttons}>Unknown</Text>
-                    </TouchableOpacity>
-                  
-                    </>) : (
-                     <TouchableOpacity
-                     style={styles.box2}
-                     title="Unknown"
-                     onPress={() => filterByGender('Unknown')}>
-                     <Text style={styles.buttons}>Unknown</Text>
-                   </TouchableOpacity>
+                    {gender === 'Unknown' ? (
+                      <>
+                        <TouchableOpacity
+                          style={styles.box2Selected}
+                          title="Unknown"
+                          onPress={() => filterByGender('')}>
+                          <Text style={styles.buttons}>Unknown</Text>
+                        </TouchableOpacity>
+                      </>
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.box2}
+                        title="Unknown"
+                        onPress={() => filterByGender('Unknown')}>
+                        <Text style={styles.buttons}>Unknown</Text>
+                      </TouchableOpacity>
                     )}
-
 
                     <TouchableOpacity
                       style={styles.box2}
