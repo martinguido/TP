@@ -28,14 +28,11 @@ const Home = ({navigation}) => {
               ++i;
             }
           }
-          console.log(charactersOff);
           setCharacters(charactersOff);
           setLoading(false);
           setFav(true);
         } else {
-          console.log('NO ES UN ARREGLO');
           setCharacters(Object.values(charactersOff));
-          console.log(characters);
           setLoading(false);
           setFav(true);
         }
@@ -49,6 +46,7 @@ const Home = ({navigation}) => {
 
   const renderItem = ({item}) => (
     <Card
+      showCom={true}
       id={item.id}
       imagen={item.imagen}
       nombre={item.nombre}
@@ -57,6 +55,7 @@ const Home = ({navigation}) => {
       genero={item.genero}
       origen={item.origen}
       ubicacion={item.ubicacion}
+      comentario={item.comentario}
     />
   );
 

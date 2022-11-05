@@ -27,9 +27,9 @@ const Home = ({navigation}) => {
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 50;
   const iconSize = defaultFontSize * fontScale;
-
   const renderItem = ({item}) => (
     <Card
+      showCom={false}
       id={item.id}
       imagen={item.image}
       nombre={item.name}
