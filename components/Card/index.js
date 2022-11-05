@@ -1,5 +1,5 @@
 import React, {memo, useState, useEffect} from 'react';
-import {View, Text, Image, TouchableOpacity, PixelRatio} from 'react-native';
+import {View, Text, Image, TouchableOpacity, PixelRatio, Animated} from 'react-native';
 import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import app from '../connection.js';
@@ -9,12 +9,32 @@ import {Icon} from 'react-native-elements';
 let db = getDatabase(app);
 let charactersOff = {};
 
+
 const Card = props => {
   const [showModal, setShowModal] = useState(false);
   const [colorIcon, setColorIcon] = useState('white');
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 50;
   const iconSize = defaultFontSize * fontScale;
+  const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
+  const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
+  
+  const handleAnimation = () => {
+    Animated.timing(rotateAnimation, {
+      toValue: 100,
+      duration: 800,
+      useNativeDriver: true,
+    }).start(() => {
+      rotateAnimation.setValue(0);
+    });
+    //console.log('animating')
+  };
+  
+  const rotate = rotateAnimation.interpolate({  
+    inputRange: [0, 100],  
+    outputRange: ['0deg', '360deg']
+  })
+
   //let deviceID = deviceInfo.getUniqueId()._j;
   const deviceID = 1000;
   useEffect(() => {
@@ -48,12 +68,15 @@ const Card = props => {
   const updateDatabase = () => {
     if (colorIcon === 'white') {
       setColorIcon('gold');
+      handleAnimation();
       uploadCharacter();
     } else {
       setColorIcon('white');
       deleteCharacter();
     }
   };
+
+
 
   return (
     <View style={styles.card}>
@@ -74,8 +97,11 @@ const Card = props => {
           />
           <TouchableOpacity
             style={styles.star}
-            onPress={() => updateDatabase()}>
-            <Icon name="star" color={colorIcon} size={iconSize} />
+            onPress={() => {updateDatabase()}}>
+           
+           <Animated.View style= {{transform: [{rotate: rotate}]}}>
+           <Icon name="star" color={colorIcon} size={iconSize} />
+           </Animated.View>
           </TouchableOpacity>
         </TouchableOpacity>
       </View>
