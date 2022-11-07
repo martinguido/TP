@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {TextInput} from 'react-native-gesture-handler';
 import app from '../connection.js';
 import {ref, getDatabase, update} from 'firebase/database';
+import {useSelector} from 'react-redux';
 let db = getDatabase(app);
 
 const MyModal = ({
@@ -21,10 +22,8 @@ const MyModal = ({
 }) => {
   const [modalCommVisible, setModalCommVisible] = useState(false);
   const [comment, setComment] = useState('');
-  const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
-  const defaultFontSize = 55;
-  const iconSize = defaultFontSize * fontScale;
-  const deviceID = 1000;
+  const iconSize = useSelector(state => state.counter.iconSize);
+  const deviceID = useSelector(state => state.counter.deviceID);
 
   const addComment = text => {
     db = getDatabase();

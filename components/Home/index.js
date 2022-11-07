@@ -7,26 +7,30 @@ import {
   Text,
   Modal,
   TouchableOpacity,
-  PixelRatio,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Card from '../Card/index.js';
 import styles from './home_style.js';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  setCharactersAPI,
+  setMoreData,
+  setShowModal,
+  filterByName,
+  filterByGender,
+  filterBySpecies,
+  filterByStats,
+  filterByType,
+} from '../reducers/counterSlice.js';
+import {fetchAPI} from '../reducers/fetchAPI.js';
+
 const Home = ({navigation}) => {
-  const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currPage, setCurrPage] = useState(1);
-  const [next, setNext] = useState('');
-  const [search, setSearch] = useState('');
-  const [stats, setStats] = useState('');
-  const [species, setSpecies] = useState('');
-  const [gender, setGender] = useState('');
-  const [type, setType] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
-  const defaultFontSize = 50;
-  const iconSize = defaultFontSize * fontScale;
+  const iconSize = useSelector(state => state.counter.iconSize);
+  const dispatch = useDispatch();
+  () => dispatch(fetchAPI());
+  const characters = useSelector(state => state.counter.charactersAPI);
+  const loading = useSelector(state => state.counter.loading);
   const renderItem = ({item}) => (
     <Card
       showCom={false}
@@ -41,77 +45,6 @@ const Home = ({navigation}) => {
     />
   );
 
-  const setStart = () => {
-    setCurrPage(1);
-    setCharacters([]);
-    setNext('');
-  };
-
-  const filterByName = text => {
-    setStart();
-    setSearch(text);
-  };
-
-  const filterByStats = stats => {
-    setStart();
-    setStats(stats);
-  };
-
-  const filterByGender = gender => {
-    setStart();
-    setGender(gender);
-  };
-
-  const filterByType = type => {
-    setStart();
-    setType(type);
-  };
-
-  const filterBySpecies = species => {
-    setStart();
-    setSpecies(species);
-  };
-
-  const setMoreData = () => {
-    if (next !== null) {
-      setCurrPage(prevPage => prevPage + 1);
-    }
-  };
-
-  useEffect(() => {
-    fetch(
-      'https://rickandmortyapi.com/api/character?name=' +
-        search +
-        '&page=' +
-        currPage +
-        '&status=' +
-        stats +
-        '&species=' +
-        species +
-        '&gender=' +
-        gender +
-        '&type=' +
-        type,
-    )
-      .then(response => response.json())
-      .then(response => {
-        if (Object.keys(response).length !== 1) {
-          setCharacters(prevCharacters =>
-            prevCharacters.concat(response.results),
-          );
-          setLoading(false);
-          setNext(response.info.next);
-        } else {
-          setCharacters([]);
-          setNext('');
-        }
-      })
-
-      .catch(error => {
-        console.log('error');
-      });
-  }, [currPage, search, stats, species, gender, type]);
-
   return (
     <View style={styles.container}>
       <View>
@@ -120,17 +53,20 @@ const Home = ({navigation}) => {
             placeholder=" Search name..."
             placeholderTextColor="grey"
             style={styles.searchName}
-            value={search}
-            onChangeText={text => filterByName(text)}
+            value={useSelector(state => state.counter.search)}
+            onChangeText={text => dispatch(filterByName(text))}
           />
           <TouchableOpacity
             style={styles.filter}
-            onPress={() => setShowModal(true)}>
+            onPress={() => dispatch(setShowModal(true))}>
             <Icon name="filter" color="white" size={iconSize} />
           </TouchableOpacity>
         </View>
         <View>
-          <Modal transparent={true} visible={showModal} animationType="fade">
+          <Modal
+            transparent={true}
+            visible={useSelector(state => state.counter.showModal)}
+            animationType="fade">
             <View style={styles.modalCard}>
               <View style={styles.container2}>
                 <View style={styles.containerInputs}>
@@ -140,8 +76,8 @@ const Home = ({navigation}) => {
                       placeholder="Type name..."
                       placeholderTextColor="white"
                       style={styles.searchBar}
-                      value={search}
-                      onChangeText={text => filterByName(text)}
+                      value={useSelector(state => state.counter.search)}
+                      onChangeText={text => dispatch(filterByName(text))}
                     />
                   </View>
                   <View style={styles.inputContainer}>
@@ -150,8 +86,10 @@ const Home = ({navigation}) => {
                       placeholder="Type specie..."
                       placeholderTextColor="white"
                       style={styles.searchBar}
-                      value={species}
-                      onChangeText={species => filterBySpecies(species)}
+                      value={useSelector(state => state.counter.species)}
+                      onChangeText={species =>
+                        dispatch(filterBySpecies(species))
+                      }
                     />
                   </View>
 
@@ -161,8 +99,8 @@ const Home = ({navigation}) => {
                       placeholder="Type type..."
                       placeholderTextColor="white"
                       style={styles.searchBar}
-                      value={type}
-                      onChangeText={type => filterByType(type)}
+                      value={useSelector(state => state.counter.type)}
+                      onChangeText={type => dispatch(filterByType(type))}
                     />
                   </View>
                 </View>
@@ -171,13 +109,13 @@ const Home = ({navigation}) => {
                   <View style={styles.options}>
                     <Text style={styles.text3}>Status:</Text>
                     <View style={styles.status}>
-                      {stats === 'Dead' ? (
+                      {useSelector(state => state.counter.stats) === 'Dead' ? (
                         <>
                           <TouchableOpacity
                             style={styles.boxSelected}
                             title="Dead"
                             onPress={() => {
-                              filterByStats('');
+                              dispatch(filterByStats(''));
                             }}>
                             <Text style={styles.buttons}>Dead</Text>
                           </TouchableOpacity>
@@ -187,18 +125,18 @@ const Home = ({navigation}) => {
                           style={styles.box}
                           title="Dead"
                           onPress={() => {
-                            filterByStats('Dead');
+                            dispatch(filterByStats('Dead'));
                           }}>
                           <Text style={styles.buttons}>Dead</Text>
                         </TouchableOpacity>
                       )}
 
-                      {stats === 'Alive' ? (
+                      {useSelector(state => state.counter.stats) === 'Alive' ? (
                         <>
                           <TouchableOpacity
                             style={styles.boxSelected}
                             title="Alive"
-                            onPress={() => filterByStats('')}>
+                            onPress={() => dispatch(filterByStats(''))}>
                             <Text style={styles.buttons}>Alive</Text>
                           </TouchableOpacity>
                         </>
@@ -207,18 +145,19 @@ const Home = ({navigation}) => {
                           style={styles.box}
                           title="Alive"
                           onPress={() => {
-                            filterByStats('Alive');
+                            dispatch(filterByStats('Alive'));
                           }}>
                           <Text style={styles.buttons}>Alive</Text>
                         </TouchableOpacity>
                       )}
 
-                      {stats === 'Unknown' ? (
+                      {useSelector(state => state.counter.stats) ===
+                      'Unknown' ? (
                         <>
                           <TouchableOpacity
                             style={styles.boxSelected}
                             title="Unknown"
-                            onPress={() => filterByStats('')}>
+                            onPress={() => dispatch(filterByStats(''))}>
                             <Text style={styles.buttons}>Unknown</Text>
                           </TouchableOpacity>
                         </>
@@ -227,7 +166,7 @@ const Home = ({navigation}) => {
                           style={styles.box}
                           title="Unknown"
                           onPress={() => {
-                            filterByStats('Unknown');
+                            dispatch(filterByStats('Unknown'));
                           }}>
                           <Text style={styles.buttons}>Unknown</Text>
                         </TouchableOpacity>
@@ -236,7 +175,7 @@ const Home = ({navigation}) => {
                       <TouchableOpacity
                         style={styles.box}
                         title="Cualquiera"
-                        onPress={() => filterByStats('')}>
+                        onPress={() => dispatch(filterByStats(''))}>
                         <Text style={styles.buttons}>Any</Text>
                       </TouchableOpacity>
                     </View>
@@ -244,12 +183,12 @@ const Home = ({navigation}) => {
 
                   <Text style={styles.text3}>Genre:</Text>
                   <View style={styles.status2}>
-                    {gender === 'Female' ? (
+                    {useSelector(state => state.counter.stats) === 'Female' ? (
                       <>
                         <TouchableOpacity
                           style={styles.box2Selected}
                           title="Female"
-                          onPress={() => filterByGender('')}>
+                          onPress={() => dispatch(filterByGender(''))}>
                           <Text style={styles.buttons}>Female</Text>
                         </TouchableOpacity>
                       </>
@@ -257,17 +196,17 @@ const Home = ({navigation}) => {
                       <TouchableOpacity
                         style={styles.box2}
                         title="Female"
-                        onPress={() => filterByGender('Female')}>
+                        onPress={() => dispatch(filterByGender('Female'))}>
                         <Text style={styles.buttons}>Female</Text>
                       </TouchableOpacity>
                     )}
 
-                    {gender === 'Male' ? (
+                    {useSelector(state => state.counter.stats) === 'Male' ? (
                       <>
                         <TouchableOpacity
                           style={styles.box2Selected}
                           title="Male"
-                          onPress={() => filterByGender('')}>
+                          onPress={() => dispatch(filterByGender(''))}>
                           <Text style={styles.buttons}>Male</Text>
                         </TouchableOpacity>
                       </>
@@ -275,17 +214,18 @@ const Home = ({navigation}) => {
                       <TouchableOpacity
                         style={styles.box2}
                         title="Male"
-                        onPress={() => filterByGender('Male')}>
+                        onPress={() => dispatch(filterByGender('Male'))}>
                         <Text style={styles.buttons}>Male</Text>
                       </TouchableOpacity>
                     )}
 
-                    {gender === 'Genderless' ? (
+                    {useSelector(state => state.counter.stats) ===
+                    'Genderless' ? (
                       <>
                         <TouchableOpacity
                           style={styles.box2Selected}
                           title="Genderless"
-                          onPress={() => filterByGender('')}>
+                          onPress={() => dispatch(filterByGender(''))}>
                           <Text style={styles.buttons}>Genderless</Text>
                         </TouchableOpacity>
                       </>
@@ -293,18 +233,18 @@ const Home = ({navigation}) => {
                       <TouchableOpacity
                         style={styles.box2}
                         title="Genderless"
-                        onPress={() => filterByGender('Genderless')}>
+                        onPress={() => dispatch(filterByGender('Genderless'))}>
                         <Text style={styles.buttons}>Genderless</Text>
                       </TouchableOpacity>
                     )}
                   </View>
                   <View style={styles.status2}>
-                    {gender === 'Unknown' ? (
+                    {useSelector(state => state.counter.stats) === 'Unknown' ? (
                       <>
                         <TouchableOpacity
                           style={styles.box2Selected}
                           title="Unknown"
-                          onPress={() => filterByGender('')}>
+                          onPress={() => dispatch(filterByGender(''))}>
                           <Text style={styles.buttons}>Unknown</Text>
                         </TouchableOpacity>
                       </>
@@ -312,7 +252,7 @@ const Home = ({navigation}) => {
                       <TouchableOpacity
                         style={styles.box2}
                         title="Unknown"
-                        onPress={() => filterByGender('Unknown')}>
+                        onPress={() => dispatch(filterByGender('Unknown'))}>
                         <Text style={styles.buttons}>Unknown</Text>
                       </TouchableOpacity>
                     )}
@@ -320,14 +260,14 @@ const Home = ({navigation}) => {
                     <TouchableOpacity
                       style={styles.box2}
                       title="Cualquiera"
-                      onPress={() => filterByGender('')}>
+                      onPress={() => dispatch(filterByGender(''))}>
                       <Text style={styles.buttons}>Any</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
                 <TouchableOpacity
                   style={styles.close}
-                  onPress={() => setShowModal(false)}>
+                  onPress={() => dispatch(setShowModal(false))}>
                   <Text style={styles.apply}>Apply</Text>
                 </TouchableOpacity>
               </View>
@@ -346,7 +286,7 @@ const Home = ({navigation}) => {
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           onEndReachedThreshold={0.5}
-          onEndReached={setMoreData}
+          onEndReached={dispatch(setMoreData())}
         />
       )}
     </View>

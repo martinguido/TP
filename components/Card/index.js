@@ -11,7 +11,7 @@ import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import app from '../connection.js';
 import {onValue, set, ref, getDatabase} from 'firebase/database';
-
+import {useSelector} from 'react-redux';
 import {Icon} from 'react-native-elements';
 let db = getDatabase(app);
 let charactersOff = {};
@@ -19,9 +19,8 @@ let charactersOff = {};
 const Card = props => {
   const [showModal, setShowModal] = useState(false);
   const [colorIcon, setColorIcon] = useState('white');
-  const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
-  const defaultFontSize = 50;
-  const iconSize = defaultFontSize * fontScale;
+  const iconSize = useSelector(state => state.counter.iconSize);
+  const deviceID = useSelector(state => state.counter.deviceID);
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
   const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -33,7 +32,6 @@ const Card = props => {
     }).start(() => {
       rotateAnimation.setValue(0);
     });
-    //console.log('animating')
   };
 
   const rotate = rotateAnimation.interpolate({
@@ -41,8 +39,6 @@ const Card = props => {
     outputRange: ['0deg', '360deg'],
   });
 
-  //let deviceID = deviceInfo.getUniqueId()._j;
-  const deviceID = 1000;
   useEffect(() => {
     let dbRef = ref(db, 'characters/' + deviceID + '/' + props.id);
     onValue(dbRef, async snapshot => {
