@@ -41,7 +41,11 @@ export const counterSlice = createSlice({
     },
     getCharactersAPI: (state = initialState, response) => {
       if (Object.keys(response.payload).length !== 1) {
-        state.charactersAPI.push(response.payload.results);
+        state.charactersAPI = state.charactersAPI.concat(
+          response.payload.results,
+        );
+        //state.charactersAPI.push(response.payload.results);
+        console.log(state.charactersAPI);
         state.loading = false;
         state.next = response.payload.info.next;
       } else {
@@ -50,40 +54,45 @@ export const counterSlice = createSlice({
       }
     },
 
-    filterByName: (state = initialState) => {
+    filterByName: (state = initialState, action) => {
       state.currPage = 1;
       state.charactersAPI = [];
       state.next = '';
-      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+      state.search = action.payload;
     },
-    filterByStats: (state = initialState) => {
+    filterBySpecies: (state = initialState, action) => {
       state.currPage = 1;
       state.charactersAPI = [];
       state.next = '';
-      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+      state.species = action.payload;
     },
-    filterByGender: (state = initialState) => {
+    filterByType: (state = initialState, action) => {
       state.currPage = 1;
       state.charactersAPI = [];
       state.next = '';
-      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+      state.type = action.payload;
     },
-    filterByType: (state = initialState) => {
+    filterByStats: (state = initialState, action) => {
       state.currPage = 1;
       state.charactersAPI = [];
       state.next = '';
-      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+      state.stats = action.payload;
     },
-    filterBySpecies: (state = initialState) => {
+    filterByGender: (state = initialState, action) => {
       state.currPage = 1;
       state.charactersAPI = [];
       state.next = '';
-      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+      state.gender = action.payload;
     },
+
     setMoreData: (state = initialState) => {
       if (state.next !== null) {
         state.currPage += 1;
       }
+    },
+    incrementCurrPage: (state = initialState) => {
+      state.currPage++;
+      console.log(state.currPage);
     } /*
     createCard: item => {
       //RECIBE POR PARAMETRO UN ITEM
@@ -143,10 +152,30 @@ export const counterSlice = createSlice({
   },
 });
 
-export function fetchCharacters() {
+export function fetchCharacters(
+  search,
+  stats,
+  species,
+  gender,
+  type,
+  currPage,
+) {
   return async dispatch => {
     try {
-      let response = await fetch('https://rickandmortyapi.com/api/character?');
+      let response = await fetch(
+        'https://rickandmortyapi.com/api/character?name=' +
+          search +
+          '&page=' +
+          currPage +
+          '&status=' +
+          stats +
+          '&species=' +
+          species +
+          '&gender=' +
+          gender +
+          '&type=' +
+          type,
+      );
       response = await response.json();
       if (Object.keys(response).length !== 1) {
         dispatch(getCharactersAPI(response));
@@ -173,6 +202,7 @@ export const {
   filterByType,
   createCard,
   setMoreData,
+  incrementCurrPage,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
