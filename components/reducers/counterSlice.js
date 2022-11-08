@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
-//IMPORTAR COSAS EXTERNAS POR DEFAULT
 import {PixelRatio} from 'react-native';
-import app from '../connection.js';
 import {onValue, ref, getDatabase} from 'firebase/database';
+import app from '../connection.js';
+
 import Card from '../Card/index.js';
 /*
 import {getUniqueId} from 'react-native-device-info';
@@ -45,7 +45,7 @@ export const counterSlice = createSlice({
           response.payload.results,
         );
         //state.charactersAPI.push(response.payload.results);
-        console.log(state.charactersAPI);
+        //console.log(state.charactersAPI);
         state.loading = false;
         state.next = response.payload.info.next;
       } else {
@@ -92,7 +92,7 @@ export const counterSlice = createSlice({
     },
     incrementCurrPage: (state = initialState) => {
       state.currPage++;
-      console.log(state.currPage);
+      //console.log(state.currPage);
     } /*
     createCard: item => {
       //RECIBE POR PARAMETRO UN ITEM
@@ -119,35 +119,17 @@ export const counterSlice = createSlice({
     getErrorsAPI: (state = initialState) => {
       state.hasErrors = true;
     },
-    setCharactersRB: (state = initialState) => {
-      let dbRef = ref(db, 'characters/' + state.deviceID + '/');
-      let charactersOff;
-      onValue(dbRef, async snapshot => {
-        charactersOff = await snapshot.val();
-        if (charactersOff != null) {
-          if (Array.isArray(charactersOff)) {
-            var i = 0;
-            while (i < charactersOff.length) {
-              if (charactersOff[i] === undefined || charactersOff[i] === null) {
-                charactersOff.splice(i, 1);
-              } else {
-                ++i;
-              }
-            }
-            state.charactersRB.push(charactersOff);
-            state.loadingFav = false;
-            state.fav = true;
-          } else {
-            state.charactersRB.push(Object.values(charactersOff));
-            state.loadingFav = false;
-            state.fav = true;
-          }
-        } else {
-          state.charactersRB = {};
-          state.fav = false;
-          state.loadingFav = false;
-        }
-      });
+    getCharactersRB: (state = initialState, response) => {
+      console.log('HOLAAAA');
+      state.charactersRB = state.charactersAPI.concat(response.payload);
+      //console.log(state.charactersRB);
+      state.loadingFav = false;
+      state.fav = true;
+    },
+    getNoCharactersRB: (state = initialState) => {
+      state.charactersRB = {};
+      state.fav = false;
+      state.loadingFav = false;
     },
   },
 });
@@ -188,12 +170,54 @@ export function fetchCharacters(
   };
 }
 
+export function fetchCharactersRB(deviceID) {
+  return async dispatch => {
+    try {
+      let dbRef = ref(db, 'characters/' + deviceID + '/');
+      let charactersOff;
+
+      onValue(dbRef, async snapshot => {
+        charactersOff = await snapshot.val();
+
+        if (charactersOff != null) {
+          if (Array.isArray(charactersOff)) {
+            var i = 0;
+            while (i < charactersOff.length) {
+              if (charactersOff[i] === undefined || charactersOff[i] === null) {
+                charactersOff.splice(i, 1);
+              } else {
+                ++i;
+              }
+            }
+            //console.log(charactersOff);
+            getCharactersRB(charactersOff);
+            //state.charactersRB.push(charactersOff);
+            //state.loadingFav = false;
+            //state.fav = true;
+          } else {
+            //console.log(Object.values(charactersOff));
+            getCharactersRB(Object.values(charactersOff));
+            //state.charactersRB.push(Object.values(charactersOff));
+            //state.loadingFav = false;
+            //state.fav = true;
+          }
+        } else {
+          getNoCharactersRB();
+        }
+      });
+    } catch (error) {
+      dispatch(getErrorsAPI());
+    }
+  };
+}
+
 // Action creators are generated for each case reducer function
 export const {
   getCharactersAPI,
   getNoCharactersAPI,
+  getCharactersRB,
+  getNoCharactersRB,
   getErrorsAPI,
-  setCharactersRB,
   setShowModal,
   filterByGender,
   filterByName,
