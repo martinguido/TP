@@ -120,8 +120,9 @@ export const counterSlice = createSlice({
       state.hasErrors = true;
     },
     getCharactersRB: (state = initialState, response) => {
-      console.log('HOLAAAA');
-      state.charactersRB = state.charactersAPI.concat(response.payload);
+      state.charactersRB = response.payload;
+      console.log(state.charactersRB);
+      console.log('MARTINNN');
       //console.log(state.charactersRB);
       state.loadingFav = false;
       state.fav = true;
@@ -190,19 +191,19 @@ export function fetchCharactersRB(deviceID) {
               }
             }
             //console.log(charactersOff);
-            getCharactersRB(charactersOff);
+            dispatch(getCharactersRB(charactersOff));
             //state.charactersRB.push(charactersOff);
             //state.loadingFav = false;
             //state.fav = true;
           } else {
             //console.log(Object.values(charactersOff));
-            getCharactersRB(Object.values(charactersOff));
+            dispatch(getCharactersRB(Object.values(charactersOff)));
             //state.charactersRB.push(Object.values(charactersOff));
             //state.loadingFav = false;
             //state.fav = true;
           }
         } else {
-          getNoCharactersRB();
+          dispatch(getNoCharactersRB());
         }
       });
     } catch (error) {
