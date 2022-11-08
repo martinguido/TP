@@ -36,6 +36,9 @@ export const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
+    setShowModal: (state = initialState, booleano) => {
+      state.showModal = booleano.payload;
+    },
     getCharactersAPI: (state = initialState, response) => {
       if (Object.keys(response.payload).length !== 1) {
         state.charactersAPI.push(response.payload.results);
@@ -46,100 +49,97 @@ export const counterSlice = createSlice({
         state.next = '';
       }
     },
-  },
-  setShowModal: (state = initialState) => {
-    console.log('MARTIN');
-    state.showModal = !state.showModal;
-  },
-  filterByName: (state = initialState) => {
-    state.currPage = 1;
-    state.charactersAPI = [];
-    state.next = '';
-    //FILTRAR RECIBE POR PARAMETRO UN TEXT
-  },
-  filterByStats: (state = initialState) => {
-    state.currPage = 1;
-    state.charactersAPI = [];
-    state.next = '';
-    //FILTRAR RECIBE POR PARAMETRO UN TEXT
-  },
-  filterByGender: (state = initialState) => {
-    state.currPage = 1;
-    state.charactersAPI = [];
-    state.next = '';
-    //FILTRAR RECIBE POR PARAMETRO UN TEXT
-  },
-  filterByType: (state = initialState) => {
-    state.currPage = 1;
-    state.charactersAPI = [];
-    state.next = '';
-    //FILTRAR RECIBE POR PARAMETRO UN TEXT
-  },
-  filterBySpecies: (state = initialState) => {
-    state.currPage = 1;
-    state.charactersAPI = [];
-    state.next = '';
-    //FILTRAR RECIBE POR PARAMETRO UN TEXT
-  },
-  setMoreData: (state = initialState) => {
-    if (state.next !== null) {
-      state.currPage += 1;
-    }
-  },
-  createCard: item => {
-    //RECIBE POR PARAMETRO UN ITEM
-    console.log('MAMAAAAA');
-    /*
-    return (
-      <Card
-        showCom={false}
-        id={item.payload.id}
-        imagen={item.payload.image}
-        nombre={item.payload.name}
-        estado={item.payload.status}
-        especie={item.payload.species}
-        genero={item.payload.gender}
-        origen={item.payload.origin.name}
-        ubicacion={item.payload.location.name}
-      />
-    );*/
-  },
-  getNoCharactersAPI: (state = initialState) => {
-    state.charactersAPI = [];
-    state.next = '';
-  },
-  getErrorsAPI: (state = initialState) => {
-    state.hasErrors = true;
-  },
-  setCharactersRB: (state = initialState) => {
-    let dbRef = ref(db, 'characters/' + state.deviceID + '/');
-    let charactersOff;
-    onValue(dbRef, async snapshot => {
-      charactersOff = await snapshot.val();
-      if (charactersOff != null) {
-        if (Array.isArray(charactersOff)) {
-          var i = 0;
-          while (i < charactersOff.length) {
-            if (charactersOff[i] === undefined || charactersOff[i] === null) {
-              charactersOff.splice(i, 1);
-            } else {
-              ++i;
-            }
-          }
-          state.charactersRB.push(charactersOff);
-          state.loadingFav = false;
-          state.fav = true;
-        } else {
-          state.charactersRB.push(Object.values(charactersOff));
-          state.loadingFav = false;
-          state.fav = true;
-        }
-      } else {
-        state.charactersRB = {};
-        state.fav = false;
-        state.loadingFav = false;
+
+    filterByName: (state = initialState) => {
+      state.currPage = 1;
+      state.charactersAPI = [];
+      state.next = '';
+      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+    },
+    filterByStats: (state = initialState) => {
+      state.currPage = 1;
+      state.charactersAPI = [];
+      state.next = '';
+      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+    },
+    filterByGender: (state = initialState) => {
+      state.currPage = 1;
+      state.charactersAPI = [];
+      state.next = '';
+      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+    },
+    filterByType: (state = initialState) => {
+      state.currPage = 1;
+      state.charactersAPI = [];
+      state.next = '';
+      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+    },
+    filterBySpecies: (state = initialState) => {
+      state.currPage = 1;
+      state.charactersAPI = [];
+      state.next = '';
+      //FILTRAR RECIBE POR PARAMETRO UN TEXT
+    },
+    setMoreData: (state = initialState) => {
+      if (state.next !== null) {
+        state.currPage += 1;
       }
-    });
+    } /*
+    createCard: item => {
+      //RECIBE POR PARAMETRO UN ITEM
+      console.log(item.charactersAPI[0].id);
+/*
+      return (
+        <Card
+          showCom={false}
+          id={item.payload.id}
+          imagen={item.payload.image}
+          nombre={item.payload.name}
+          estado={item.payload.status}
+          especie={item.payload.species}
+          genero={item.payload.gender}
+          origen={item.payload.origin.name}
+          ubicacion={item.payload.location.name}
+        />
+      );
+    },*/,
+    getNoCharactersAPI: (state = initialState) => {
+      state.charactersAPI = [];
+      state.next = '';
+    },
+    getErrorsAPI: (state = initialState) => {
+      state.hasErrors = true;
+    },
+    setCharactersRB: (state = initialState) => {
+      let dbRef = ref(db, 'characters/' + state.deviceID + '/');
+      let charactersOff;
+      onValue(dbRef, async snapshot => {
+        charactersOff = await snapshot.val();
+        if (charactersOff != null) {
+          if (Array.isArray(charactersOff)) {
+            var i = 0;
+            while (i < charactersOff.length) {
+              if (charactersOff[i] === undefined || charactersOff[i] === null) {
+                charactersOff.splice(i, 1);
+              } else {
+                ++i;
+              }
+            }
+            state.charactersRB.push(charactersOff);
+            state.loadingFav = false;
+            state.fav = true;
+          } else {
+            state.charactersRB.push(Object.values(charactersOff));
+            state.loadingFav = false;
+            state.fav = true;
+          }
+        } else {
+          state.charactersRB = {};
+          state.fav = false;
+          state.loadingFav = false;
+        }
+      });
+    },
   },
 });
 

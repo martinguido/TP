@@ -38,21 +38,21 @@ const Home = ({navigation}) => {
   const loading = useSelector(state => state.counter.loading);
 
   const renderItems = ({item}) => {
-    dispatch(createCard(item));
+    //dispatch(createCard(item)); /*
+    return (
+      <Card
+        showCom={false}
+        id={item.id}
+        imagen={item.image}
+        nombre={item.name}
+        estado={item.status}
+        especie={item.species}
+        genero={item.gender}
+        origen={item.origin.name}
+        ubicacion={item.location.name}
+      />
+    );
   };
-  /*   <Card
-      showCom={false}
-      id={item.id}
-      imagen={item.image}
-      nombre={item.name}
-      estado={item.status}
-      especie={item.species}
-      genero={item.gender}
-      origen={item.origin.name}
-      ubicacion={item.location.name}
-    />
-    */
-
   return (
     <View style={styles.container}>
       <View>
@@ -304,6 +304,7 @@ const Home = ({navigation}) => {
           keyExtractor={item => item.id}
           data={characters}
           renderItem={renderItems}
+          //renderItem={({item}) => dispatch(crearCarta(item))}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           //onEndReachedThreshold={0.5}
           //onEndReached={dispatch(setMoreData())}
