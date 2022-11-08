@@ -1,12 +1,5 @@
 import React, {memo, useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  PixelRatio,
-  Animated,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Animated} from 'react-native';
 import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import app from '../connection.js';
