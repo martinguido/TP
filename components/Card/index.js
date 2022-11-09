@@ -2,18 +2,9 @@ import React, {memo, useState, useEffect} from 'react';
 import {View, Text, Image, TouchableOpacity, Animated} from 'react-native';
 import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
-import app from '../connection.js';
-import {onValue, set, ref, getDatabase} from 'firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
 import {Icon} from 'react-native-elements';
-import {
-  uploadCharacter,
-  deleteCharacter,
-  fetchCharactersRB,
-} from '../reducers/counterSlice.js';
-
-let db = getDatabase(app);
-let charactersOff = {};
+import {uploadCharacter, deleteCharacter} from '../reducers/counterSlice.js';
 
 const Card = props => {
   const {iconSize, deviceID, charactersRB} = useSelector(
