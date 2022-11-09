@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {PixelRatio} from 'react-native';
-import {onValue, ref, getDatabase} from 'firebase/database';
+import {onValue, set, ref, getDatabase, update} from 'firebase/database';
 import app from '../connection.js';
 
 import Card from '../Card/index.js';
@@ -112,6 +112,41 @@ export const counterSlice = createSlice({
         />
       );
     },*/,
+
+    uploadCharacter: (state = initialState, action) => {
+      //state.colorIcon = 'gold',
+      set(
+        ref(db, 'characters/' + action.payload[1] + '/' + action.payload[0].id),
+        {
+          id: action.payload[0].id,
+          nombre: action.payload[0].nombre,
+          imagen: action.payload[0].imagen,
+          estado: action.payload[0].estado,
+          especie: action.payload[0].especie,
+          genero: action.payload[0].genero,
+          origen: action.payload[0].origen,
+          ubicacion: action.payload[0].ubicacion,
+          comentario: '',
+        },
+      );
+    },
+
+    deleteCharacter: (state = initialState, action) => {
+      //state.colorIcon = 'white',
+      set(
+        ref(db, 'characters/' + action.payload[1] + '/' + action.payload[0].id),
+        null,
+      );
+    },
+
+    uploadComment: (state = initialState, action) => {
+      update(
+        ref(db, 'characters/' + action.payload[2] + '/' + action.payload[0]),
+        {
+          comentario: action.payload[1],
+        },
+      );
+    },
     getNoCharactersAPI: (state = initialState) => {
       state.charactersAPI = [];
       state.next = '';
@@ -217,6 +252,9 @@ export const {
   createCard,
   setMoreData,
   incrementCurrPage,
+  uploadCharacter,
+  deleteCharacter,
+  uploadComment,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

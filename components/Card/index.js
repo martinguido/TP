@@ -4,8 +4,10 @@ import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import app from '../connection.js';
 import {onValue, set, ref, getDatabase} from 'firebase/database';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Icon} from 'react-native-elements';
+import {uploadCharacter, deleteCharacter} from '../reducers/counterSlice.js';
+
 let db = getDatabase(app);
 let charactersOff = {};
 
@@ -16,7 +18,7 @@ const Card = props => {
   const deviceID = useSelector(state => state.counter.deviceID);
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
   const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
-
+  const dispatch = useDispatch();
   const handleAnimation = () => {
     Animated.timing(rotateAnimation, {
       toValue: 100,
@@ -42,6 +44,7 @@ const Card = props => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /*
   const uploadCharacter = () => {
     db = getDatabase();
     set(ref(db, 'characters/' + deviceID + '/' + props.id), {
@@ -56,6 +59,18 @@ const Card = props => {
       comentario: '',
     });
   };
+  */
+  const updateDatabase = () => {
+    if (colorIcon === 'white') {
+      setColorIcon('gold');
+      handleAnimation();
+      dispatch(uploadCharacter([props, deviceID]));
+    } else {
+      setColorIcon('white');
+      dispatch(deleteCharacter([props, deviceID]));
+    }
+  };
+  /*
   const deleteCharacter = () => {
     db = getDatabase();
     set(ref(db, 'characters/' + deviceID + '/' + props.id), null);
@@ -71,6 +86,7 @@ const Card = props => {
       deleteCharacter();
     }
   };
+  */
 
   return (
     <View style={styles.card}>
