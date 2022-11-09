@@ -13,7 +13,7 @@ const Home = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [fav, setFav] = useState(false);
 
-  const deviceID = 1000;
+  const deviceID = 2000;
   useEffect(() => {
     let dbRef = ref(db, 'characters/' + deviceID + '/');
     onValue(dbRef, async snapshot => {

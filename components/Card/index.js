@@ -11,19 +11,26 @@ import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import app from '../connection.js';
 import {onValue, set, ref, getDatabase} from 'firebase/database';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {uploadCharacter, deleteCharacter} from '../reducers/counterSlice.js';
 import {Icon} from 'react-native-elements';
 let db = getDatabase(app);
 let charactersOff = {};
 
 const Card = props => {
+  const {deviceID} = useSelector(state => state.counter);
+
   const [showModal, setShowModal] = useState(false);
   const [colorIcon, setColorIcon] = useState('white');
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 50;
   const iconSize = defaultFontSize * fontScale;
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
-  const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
+
+
+
+  const dispatch = useDispatch();
+
 
   const handleAnimation = () => {
     Animated.timing(rotateAnimation, {
@@ -42,7 +49,7 @@ const Card = props => {
   });
 
   //let deviceID = deviceInfo.getUniqueId()._j;
-  const deviceID = 1000;
+  //const deviceID = 2000;
   useEffect(() => {
     let dbRef = ref(db, 'characters/' + deviceID + '/' + props.id);
     onValue(dbRef, async snapshot => {
@@ -50,10 +57,13 @@ const Card = props => {
       if (charactersOff != null) {
         setColorIcon('gold');
       }
+      else {
+      setColorIcon('white');
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const uploadCharacter = () => {
+  const uploadCharacterDB = () => {
     db = getDatabase();
     set(ref(db, 'characters/' + deviceID + '/' + props.id), {
       id: props.id,
@@ -67,7 +77,7 @@ const Card = props => {
       comentario: '',
     });
   };
-  const deleteCharacter = () => {
+  const deleteCharacterDB = () => {
     db = getDatabase();
     set(ref(db, 'characters/' + deviceID + '/' + props.id), null);
   };
@@ -76,10 +86,14 @@ const Card = props => {
     if (colorIcon === 'white') {
       setColorIcon('gold');
       handleAnimation();
-      uploadCharacter();
+      console.log(props);
+      let info = props;
+      dispatch(uploadCharacter([info, deviceID]));
+      //uploadCharacter();
     } else {
       setColorIcon('white');
-      deleteCharacter();
+      dispatch(deleteCharacter([props, deviceID]));
+      //deleteCharacter();
     }
   };
 

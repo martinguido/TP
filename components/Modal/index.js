@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {TextInput} from 'react-native-gesture-handler';
 import app from '../connection.js';
 import {ref, getDatabase, update} from 'firebase/database';
+import {useDispatch, useSelector} from 'react-redux';
+import {uploadComment} from '../reducers/counterSlice.js';
 let db = getDatabase(app);
 
 const MyModal = ({
@@ -24,17 +26,24 @@ const MyModal = ({
   const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
   const defaultFontSize = 55;
   const iconSize = defaultFontSize * fontScale;
-  const deviceID = 1000;
+  const deviceID = 2000;
+  
+
+  const dispatch = useDispatch();
 
   const addComment = text => {
-    db = getDatabase();
+
+    dispatch(uploadComment([id, text, deviceID]));
+    
+    /*db = getDatabase();
     update(ref(db, 'characters/' + deviceID + '/' + id), {
       comentario: text,
-    });
+    });*/
     setModalCommVisible(false);
     setComment('');
   };
 
+  
   return (
     <Modal transparent={true} visible={showModal} animationType="slide">
       <View style={styles.modalContainer}>
