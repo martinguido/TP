@@ -16,7 +16,8 @@ const Favs = ({navigation}) => {
   }, [dispatch, deviceID]);
 
   let characters = charactersRB;
-
+  //console.log(characters[0].id);
+  //console.log(charactersRB.length);
   const renderItem = ({item}) => (
     <Card
       showCom={true}

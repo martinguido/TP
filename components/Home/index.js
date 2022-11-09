@@ -24,12 +24,14 @@ import {
   filterByType,
   createCard,
   incrementCurrPage,
+  fetchCharactersRB,
 } from '../reducers/counterSlice.js';
 
 const Home = ({navigation}) => {
   //const iconSize = useSelector(state => state.counter.iconSize);
   const {
     iconSize,
+    deviceID,
     charactersAPI,
     loading,
     showModal,
@@ -46,7 +48,8 @@ const Home = ({navigation}) => {
   useEffect(() => {
     //console.log('FETCH  ' + currPage);
     dispatch(fetchCharacters(search, stats, species, gender, type, currPage));
-  }, [dispatch, search, stats, species, gender, type, currPage]);
+    dispatch(fetchCharactersRB(deviceID));
+  }, [dispatch, search, stats, species, gender, type, currPage, deviceID]);
 
   let characters = charactersAPI; //[0]; //useSelector(state => state.counter.charactersAPI)[0];
   //const loading = useSelector(state => state.counter.loading);

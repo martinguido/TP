@@ -6,16 +6,21 @@ import app from '../connection.js';
 import {onValue, set, ref, getDatabase} from 'firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
 import {Icon} from 'react-native-elements';
-import {uploadCharacter, deleteCharacter} from '../reducers/counterSlice.js';
+import {
+  uploadCharacter,
+  deleteCharacter,
+  fetchCharactersRB,
+} from '../reducers/counterSlice.js';
 
 let db = getDatabase(app);
 let charactersOff = {};
 
 const Card = props => {
+  const {iconSize, deviceID, charactersRB} = useSelector(
+    state => state.counter,
+  );
   const [showModal, setShowModal] = useState(false);
   const [colorIcon, setColorIcon] = useState('white');
-  const iconSize = useSelector(state => state.counter.iconSize);
-  const deviceID = useSelector(state => state.counter.deviceID);
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
   const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
   const dispatch = useDispatch();
@@ -35,15 +40,29 @@ const Card = props => {
   });
 
   useEffect(() => {
+    var color = 'white';
+    if (charactersRB !== undefined) {
+      var i = 0;
+      while (i < charactersRB.length) {
+        if (charactersRB[i].id === props.id) {
+          color = 'gold';
+        }
+        i++;
+      }
+      setColorIcon(color);
+      //if (characterRB){}
+    }
+    //if (props.id )
+    /*
     let dbRef = ref(db, 'characters/' + deviceID + '/' + props.id);
     onValue(dbRef, async snapshot => {
       charactersOff = await snapshot.val();
       if (charactersOff != null) {
         setColorIcon('gold');
       }
-    });
+    });*/
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [charactersRB]);
   /*
   const uploadCharacter = () => {
     db = getDatabase();
