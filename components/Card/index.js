@@ -1,30 +1,29 @@
 import React, {memo, useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  PixelRatio,
-  Animated,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Animated} from 'react-native';
 import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import app from '../connection.js';
 import {onValue, set, ref, getDatabase} from 'firebase/database';
-
+import {useDispatch, useSelector} from 'react-redux';
 import {Icon} from 'react-native-elements';
+import {
+  uploadCharacter,
+  deleteCharacter,
+  fetchCharactersRB,
+} from '../reducers/counterSlice.js';
+
 let db = getDatabase(app);
 let charactersOff = {};
 
 const Card = props => {
+  const {iconSize, deviceID, charactersRB} = useSelector(
+    state => state.counter,
+  );
   const [showModal, setShowModal] = useState(false);
   const [colorIcon, setColorIcon] = useState('white');
-  const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
-  const defaultFontSize = 50;
-  const iconSize = defaultFontSize * fontScale;
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
   const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
-
+  const dispatch = useDispatch();
   const handleAnimation = () => {
     Animated.timing(rotateAnimation, {
       toValue: 100,
@@ -33,7 +32,6 @@ const Card = props => {
     }).start(() => {
       rotateAnimation.setValue(0);
     });
-    //console.log('animating')
   };
 
   const rotate = rotateAnimation.interpolate({
@@ -41,18 +39,31 @@ const Card = props => {
     outputRange: ['0deg', '360deg'],
   });
 
-  //let deviceID = deviceInfo.getUniqueId()._j;
-  const deviceID = 1000;
   useEffect(() => {
+    var color = 'white';
+    if (charactersRB !== undefined) {
+      var i = 0;
+      while (i < charactersRB.length) {
+        if (charactersRB[i].id === props.id) {
+          color = 'gold';
+        }
+        i++;
+      }
+      setColorIcon(color);
+      //if (characterRB){}
+    }
+    //if (props.id )
+    /*
     let dbRef = ref(db, 'characters/' + deviceID + '/' + props.id);
     onValue(dbRef, async snapshot => {
       charactersOff = await snapshot.val();
       if (charactersOff != null) {
         setColorIcon('gold');
       }
-    });
+    });*/
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [charactersRB]);
+  /*
   const uploadCharacter = () => {
     db = getDatabase();
     set(ref(db, 'characters/' + deviceID + '/' + props.id), {
@@ -67,6 +78,18 @@ const Card = props => {
       comentario: '',
     });
   };
+  */
+  const updateDatabase = () => {
+    if (colorIcon === 'white') {
+      setColorIcon('gold');
+      handleAnimation();
+      dispatch(uploadCharacter([props, deviceID]));
+    } else {
+      setColorIcon('white');
+      dispatch(deleteCharacter([props, deviceID]));
+    }
+  };
+  /*
   const deleteCharacter = () => {
     db = getDatabase();
     set(ref(db, 'characters/' + deviceID + '/' + props.id), null);
@@ -82,6 +105,7 @@ const Card = props => {
       deleteCharacter();
     }
   };
+  */
 
   return (
     <View style={styles.card}>

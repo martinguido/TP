@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Modal, PixelRatio} from 'react-native';
+import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import styles from './modal_style.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TextInput} from 'react-native-gesture-handler';
-import app from '../connection.js';
-import {ref, getDatabase, update} from 'firebase/database';
-let db = getDatabase(app);
+import {useSelector, useDispatch} from 'react-redux';
+import {uploadComment} from '../reducers/counterSlice.js';
 
 const MyModal = ({
   showCom,
@@ -21,11 +20,17 @@ const MyModal = ({
 }) => {
   const [modalCommVisible, setModalCommVisible] = useState(false);
   const [comment, setComment] = useState('');
-  const fontScale = React.useMemo(() => PixelRatio.getFontScale(), []);
-  const defaultFontSize = 55;
-  const iconSize = defaultFontSize * fontScale;
-  const deviceID = 1000;
+  const iconSize = useSelector(state => state.counter.iconSize);
+  const deviceID = useSelector(state => state.counter.deviceID);
 
+  const dispatch = useDispatch();
+  const addComment = text => {
+    dispatch(uploadComment([id, text, deviceID]));
+    setModalCommVisible(false);
+    setComment('');
+  };
+
+  /*
   const addComment = text => {
     db = getDatabase();
     update(ref(db, 'characters/' + deviceID + '/' + id), {
@@ -33,7 +38,7 @@ const MyModal = ({
     });
     setModalCommVisible(false);
     setComment('');
-  };
+  };*/
 
   return (
     <Modal transparent={true} visible={showModal} animationType="slide">

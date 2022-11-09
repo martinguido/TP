@@ -1,49 +1,23 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {View, FlatList, ActivityIndicator, Text} from 'react-native';
 import Card from '../Card/index.js';
-import app from '../connection.js';
-import {onValue, ref, getDatabase} from 'firebase/database';
 import styles from './favs_style.js';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchCharactersRB} from '../reducers/counterSlice.js';
 
-let db = getDatabase(app);
-let charactersOff = {};
+const Favs = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {deviceID, charactersRB, loadingFav, fav} = useSelector(
+    state => state.counter,
+  );
 
-const Home = ({navigation}) => {
-  const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [fav, setFav] = useState(false);
-
-  const deviceID = 1000;
   useEffect(() => {
-    let dbRef = ref(db, 'characters/' + deviceID + '/');
-    onValue(dbRef, async snapshot => {
-      charactersOff = await snapshot.val();
-      if (charactersOff != null) {
-        if (Array.isArray(charactersOff)) {
-          var i = 0;
-          while (i < charactersOff.length) {
-            if (charactersOff[i] === undefined || charactersOff[i] === null) {
-              charactersOff.splice(i, 1);
-            } else {
-              ++i;
-            }
-          }
-          setCharacters(charactersOff);
-          setLoading(false);
-          setFav(true);
-        } else {
-          setCharacters(Object.values(charactersOff));
-          setLoading(false);
-          setFav(true);
-        }
-      } else {
-        setFav(false);
-        setLoading(false);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(fetchCharactersRB(deviceID));
+  }, [dispatch, deviceID]);
 
+  let characters = charactersRB;
+  //console.log(characters[0].id);
+  //console.log(charactersRB.length);
   const renderItem = ({item}) => (
     <Card
       showCom={true}
@@ -61,8 +35,8 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator size="large" color="grey" animating={loading} />
+      {loadingFav ? (
+        <ActivityIndicator size="large" color="grey" animating={loadingFav} />
       ) : (
         <View style={styles.container2}>
           {fav ? (
@@ -82,4 +56,4 @@ const Home = ({navigation}) => {
   );
 };
 
-export default Home;
+export default Favs;
