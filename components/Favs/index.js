@@ -30,6 +30,7 @@ const Favs = ({navigation}) => {
       origen={item.origen}
       ubicacion={item.ubicacion}
       comentario={item.comentario}
+      fav= {true}
     />
   );
 

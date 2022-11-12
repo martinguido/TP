@@ -137,8 +137,8 @@ export const counterSlice = createSlice({
         ref(db, 'characters/' + action.payload[1] + '/' + action.payload[0].id),
         null,
       );
-    },
-
+    
+    }, 
     uploadComment: (state = initialState, action) => {
       update(
         ref(db, 'characters/' + action.payload[2] + '/' + action.payload[0]),

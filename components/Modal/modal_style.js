@@ -77,6 +77,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
 
+
   text: {
     fontSize: 18,
     fontWeight: 'bold',

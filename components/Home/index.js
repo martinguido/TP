@@ -7,6 +7,7 @@ import {
   Text,
   Modal,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Card from '../Card/index.js';
@@ -72,6 +73,7 @@ const Home = ({navigation}) => {
         genero={item.gender}
         origen={item.origin.name}
         ubicacion={item.location.name}
+        fav = {false}
       />
     );
   };
@@ -304,7 +306,7 @@ const Home = ({navigation}) => {
       {loading ? (
         <ActivityIndicator size="large" color="grey" animating={loading} />
       ) : (
-        <FlatList
+        <Animated.FlatList
           style={({height: '100%'}, {width: '100%'})}
           keyExtractor={item => item.id}
           data={characters}

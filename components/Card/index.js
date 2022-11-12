@@ -1,10 +1,11 @@
 import React, {memo, useState, useEffect} from 'react';
-import {View, Text, Image, TouchableOpacity, Animated} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Animated, Dimensions} from 'react-native';
 import MyModal from '../Modal/index.js';
 import styles from './card_style.js';
 import {useDispatch, useSelector} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {uploadCharacter, deleteCharacter} from '../reducers/counterSlice.js';
+import { transform } from '@babel/core';
 
 const Card = props => {
   const {iconSize, deviceID, charactersRB} = useSelector(
@@ -13,8 +14,11 @@ const Card = props => {
   const [showModal, setShowModal] = useState(false);
   const [colorIcon, setColorIcon] = useState('white');
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
+  const [slide, setSlide] = useState(new Animated.Value(0));
   const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
   const dispatch = useDispatch();
+  const width = Dimensions.get('window').width;
+
   const handleAnimation = () => {
     Animated.timing(rotateAnimation, {
       toValue: 100,
@@ -24,6 +28,23 @@ const Card = props => {
       rotateAnimation.setValue(0);
     });
   };
+
+const handleSlide = () => {
+  Animated.timing(slide, {
+    toValue: 1,
+    duration: 500,
+    useNativeDriver: true,
+  }).start(() => {
+    slide.setValue(0);
+    dispatch(deleteCharacter([props, deviceID]));
+  });
+  
+};
+
+  const disappear = slide.interpolate({
+    inputRange: [0, 0.5,  1],
+    outputRange: [ 0, 200,  width],
+  });
 
   const rotate = rotateAnimation.interpolate({
     inputRange: [0, 100],
@@ -76,8 +97,18 @@ const Card = props => {
       handleAnimation();
       dispatch(uploadCharacter([props, deviceID]));
     } else {
+      handleSlide();
       setColorIcon('white');
-      dispatch(deleteCharacter([props, deviceID]));
+      //dispatch(deleteCharacter([props, deviceID]));
+      
+    }
+  };
+      /*if (props.fav === true) {
+
+      } else {
+        dispatch(deleteCharacter([props, deviceID]));
+      }
+ 
     }
   };
   /*
@@ -97,8 +128,11 @@ const Card = props => {
     }
   };
   */
-
   return (
+    <Animated.View 
+            style={ props.fav === true ?
+              {transform: [{translateX: disappear}]} : 
+              {}}>
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: props.imagen}} />
       <View style={styles.card_overlay}>
@@ -130,6 +164,7 @@ const Card = props => {
         </TouchableOpacity>
       </View>
     </View>
+    </Animated.View>
   );
 };
 
