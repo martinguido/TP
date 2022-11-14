@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Modal, Animated, Dimensions} from 'react-native';
+import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import styles from './modal_style.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TextInput} from 'react-native-gesture-handler';
@@ -23,8 +23,8 @@ const MyModal = ({
   const [writeComment, setWriteComment] = useState('');
   const iconSize = useSelector(state => state.counter.iconSize);
   const deviceID = useSelector(state => state.counter.deviceID);
-  const [down, setDown] = useState(new Animated.Value(0));
-  const height = Dimensions.get('screen').height;
+
+ 
 
 
   const dispatch = useDispatch();
@@ -34,21 +34,7 @@ const MyModal = ({
     setComment('');
   };
 
-  const goDown = down.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 100],
-  });
-
-  const handleAnimation = () => {
-    Animated.timing(down, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      down.setValue(0);
-    });
-  };
-
+ 
   /*
   const addComment = text => {
     db = getDatabase();
