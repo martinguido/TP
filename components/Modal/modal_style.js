@@ -9,9 +9,7 @@ export default StyleSheet.create({
    
   },
   modalCard: {
-    width: '80%',
-    //height: '60%',
-    //backgroundColor: 'blue',
+    width: '85%',
     backgroundColor: 'rgba(0,0,0,0.9)',
     borderWidth: 2,
     borderColor: 'white',
@@ -50,13 +48,11 @@ export default StyleSheet.create({
   },
   footer: {
    height: '30%',
-    //height: '40%',
     width: '100%',
     marginTop: '10%',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    //backgroundColor: 'green',
-   // backgroundColor: 'green',
+ 
   },
   footer2: {
     height: '30%',
@@ -64,7 +60,7 @@ export default StyleSheet.create({
     marginTop: '5%',
     flexDirection: 'row',
     justifyContent: 'space-around',
-   // backgroundColor: 'green',
+   
   },
   icono2: {
     flex: 1,
@@ -72,21 +68,7 @@ export default StyleSheet.create({
   icono: {
     flex: 1,
   },
-  modalComment: {
-    width: '70%',
-    height: '35%',
-    //marginTop: '50%',
-    borderWidth: 5,
-    borderColor: 'white',
-    borderRadius: 30,
-    //backgroundColor: 'rgba(0,0,0,0.9)',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    textAlignVertical: 'center',
-    flexDirection: 'column',
-    alignSelf: 'center',
-    //backgroundColor: 'green',
-  },
+  
 
 
   text: {
@@ -121,60 +103,12 @@ export default StyleSheet.create({
     marginTop: '2.5%',
     marginBottom: '5%',
 
-    
+  },
 
-  
-  },
-  footerComment: {
-    flex: 3,
-    height: '10%',
-    width: '100%',
-    marginTop: '5%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: '5%',
-    paddingBottom: '20%',
-    
-  },
-  add: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-   
-  },
-  icono2Comment: {
-    flex: 1,
-  },
-  iconoComment: {
-   flex: 1,
-  },
   pepa: {
     flex: 1,
-    
-    
   },
-  icono3: {
-    //flex: 3, 
-    alignSelf: 'center',
-  },
-  
-  pepa3: {
-    backgroundColor: 'green',
-   // flex: 1,
-    height: '50%',
-
-  },
-  footer3: {
-    height: '30%',
-     //height: '40%',
-     width: '100%',
-     marginTop: '20%',
-      flex: 1,
-    // flexDirection: 'row',
-     justifyContent: 'space-around',
-   ///  backgroundColor: 'green',
-
-   },
+ 
   comments: {
     flexDirection: 'column',
     justifyContent: 'space-around',
