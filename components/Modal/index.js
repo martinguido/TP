@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Modal} from 'react-native';
+import {View, Text, TouchableOpacity, Modal, Animated, Dimensions} from 'react-native';
 import styles from './modal_style.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TextInput} from 'react-native-gesture-handler';
@@ -20,14 +20,33 @@ const MyModal = ({
 }) => {
   const [modalCommVisible, setModalCommVisible] = useState(false);
   const [comment, setComment] = useState('');
+  const [writeComment, setWriteComment] = useState('');
   const iconSize = useSelector(state => state.counter.iconSize);
   const deviceID = useSelector(state => state.counter.deviceID);
+  const [down, setDown] = useState(new Animated.Value(0));
+  const height = Dimensions.get('screen').height;
+
 
   const dispatch = useDispatch();
   const addComment = text => {
     dispatch(uploadComment([id, text, deviceID]));
     setModalCommVisible(false);
     setComment('');
+  };
+
+  const goDown = down.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 100],
+  });
+
+  const handleAnimation = () => {
+    Animated.timing(down, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      down.setValue(0);
+    });
   };
 
   /*
@@ -43,7 +62,10 @@ const MyModal = ({
   return (
     <Modal transparent={true} visible={showModal} animationType="slide">
       <View style={styles.modalContainer}>
-        <View style={styles.modalCard}>
+        <View style= {writeComment === true?
+          [styles.modalCard,{height: '90%'}] :
+          [{height: '60%'}, styles.modalCard]
+          }>
           <Text style={styles.title}>Details</Text>
           <View style={styles.separator} />
           <Text style={styles.info}>Genre: {genero}</Text>
@@ -65,12 +87,47 @@ const MyModal = ({
               </TouchableOpacity>
             </View>
           ) : (
-            <View>
+            <View style= {styles.pepa}>
               <Text style={styles.info}>Comentario: {comentario}</Text>
+              {writeComment === true ? (
+              <View >
+              <View style = {styles.comments}>
+              <TextInput 
+                      placeholder="Add a comment..."
+                      placeholderTextColor="grey"
+                      style={styles.commentInput}
+                      value={comment}
+                      onChangeText={text => setComment(text)}
+
+                  />
+                </View>
+                <View style = {styles.hola}>
+                  <TouchableOpacity
+                  style={styles.add}
+                  onPress={() => addComment(comment)}
+                  >
+                  <Text style= {styles.text2} >Add</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.close2}
+                  onPress={() => setWriteComment(false)}
+                  >
+                  <Text style= {styles.text2} >Close</Text>
+                </TouchableOpacity>
+                
+                </View>
+                </View>
+                    
+                  
+                  
+              ) : (
+                <View></View>
+              )}
+              
               <View style={styles.footer}>
                 <TouchableOpacity
                   style={styles.close}
-                  onPress={() => setModalCommVisible(true)}>
+                  onPress={() => setWriteComment(true)}>
                   <Icon
                     name="edit"
                     color="white"
@@ -88,45 +145,10 @@ const MyModal = ({
                     style={styles.icono}
                   />
                 </TouchableOpacity>
-                <Modal
-                  animationType="slide"
-                  transparent={true}
-                  visible={modalCommVisible}>
-                  <View style={styles.modalComment}>
-                    <Text style={styles.text}>Add a comment</Text>
-                    <View style={styles.separator2} />
-                    <TextInput
-                      placeholder="Add a comment..."
-                      placeholderTextColor="grey"
-                      style={styles.commentInput}
-                      value={comment}
-                      onChangeText={text => setComment(text)}
-                    />
-                    <View style={styles.footerComment}>
-                      <TouchableOpacity
-                        style={styles.add}
-                        onPress={() => addComment(comment)}>
-                        <Icon
-                          name="plus"
-                          color="white"
-                          size={iconSize}
-                          style={styles.iconoComment}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.close}
-                        onPress={() => setModalCommVisible(false)}>
-                        <Icon
-                          name="remove"
-                          color="red"
-                          size={iconSize}
-                          style={styles.icono2Comment}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </Modal>
-              </View>
+                </View>
+               
+                
+              
             </View>
           )}
         </View>

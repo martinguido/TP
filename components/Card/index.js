@@ -32,7 +32,7 @@ const Card = props => {
 const handleSlide = () => {
   Animated.timing(slide, {
     toValue: 1,
-    duration: 500,
+    duration: 400,
     useNativeDriver: true,
   }).start(() => {
     slide.setValue(0);
@@ -50,6 +50,7 @@ const handleSlide = () => {
     inputRange: [0, 100],
     outputRange: ['0deg', '360deg'],
   });
+
 
   useEffect(() => {
     var color = 'white';
@@ -98,6 +99,7 @@ const handleSlide = () => {
       dispatch(uploadCharacter([props, deviceID]));
     } else {
       handleSlide();
+      handleAnimation();
       setColorIcon('white');
       //dispatch(deleteCharacter([props, deviceID]));
       
