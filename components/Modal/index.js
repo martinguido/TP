@@ -28,6 +28,7 @@ const MyModal = ({
 
 
   const dispatch = useDispatch();
+
   const addComment = text => {
     dispatch(uploadComment([id, text, deviceID]));
     setModalCommVisible(false);
@@ -123,7 +124,7 @@ const MyModal = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.close}
-                  onPress={() => setShowModal(false)}>
+                  onPress={() => [setShowModal(false), setWriteComment(false)]}>
                   <Icon
                     name="remove"
                     color="red"
