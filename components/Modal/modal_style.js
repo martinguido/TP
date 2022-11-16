@@ -11,6 +11,7 @@ export default StyleSheet.create({
   modalCard: {
     width: '85%',
     backgroundColor: 'rgba(0,0,0,0.9)',
+    height: '65%',
     borderWidth: 2,
     borderColor: 'white',
     borderRadius: 30,
